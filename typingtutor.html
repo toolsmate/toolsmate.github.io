@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Typing Tutor</title>
+  <!-- Google Fonts: Quantico -->
+  <link href="https://fonts.googleapis.com/css2?family=Quantico&display=swap" rel="stylesheet">
+  <style>
+    /* Global Styles */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Quantico', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1c1c1c, #272727);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #e0e0e0;
+    }
+    /* Header Navigation */
+    header {
+      width: 100%;
+      background: #1c1c1c;
+      padding: 10px 0;
+      position: relative;
+      z-index: 1000; /* Ensure header stays above overlay */
+    }
+    .main-nav .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .main-nav .nav-logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+    }
+    .main-nav .nav-logo img.logo-img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    .main-nav .nav-links {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+    .main-nav .nav-links li {
+      margin-left: 25px;
+    }
+    .main-nav .nav-links li a {
+      text-decoration: none;
+      color: #e0e0e0;
+      transition: color 0.3s;
+    }
+    .main-nav .nav-links li a:hover {
+      color: #007bff;
+    }
+    .main-nav .nav-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .main-nav .nav-toggle span {
+      height: 3px;
+      width: 25px;
+      background: #fff;
+      margin: 4px 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+    /* Desktop: Show nav-links */
+    @media (min-width: 601px) {
+      .mobile-menu-overlay {
+        display: none;
+      }
+    }
+    /* Mobile View */
+    @media (max-width: 600px) {
+      /* Hide inline nav-links in header */
+      .main-nav .nav-links {
+        display: none;
+      }
+      .main-nav .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        border: 1px solid #fff; /* Rectangular box outline */
+        padding: 5px;
+        border-radius: 4px;
+      }
+      .main-nav .nav-toggle span {
+        height: 2px; /* Reduced thickness */
+        width: 25px;
+        background: #fff;
+        margin: 3px 0;
+        transition: transform 0.4s ease, opacity 0.4s ease;
+      }
+      .main-nav.active .nav-toggle span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+      .main-nav.active .nav-toggle span:nth-child(2) {
+        opacity: 0;
+      }
+      .main-nav.active .nav-toggle span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+      /* Mobile Menu Overlay (Dark Canvas) */
+      .mobile-menu-overlay {
+        display: block;
+        position: fixed;
+        top: 60px; /* Positioned just below the navbar */
+        left: 0;
+        right: 0;
+        background: #1c1c1c;
+        z-index: 999; /* Lower than header */
+        transform: translateY(-100%);
+        transition: transform 0.5s ease-out;
+      }
+      .mobile-menu-overlay.active {
+        transform: translateY(0);
+      }
+      .mobile-menu-overlay ul {
+        list-style: none;
+        margin: 0;
+        padding: 20px;
+        text-align: left; /* Menu items aligned to left */
+      }
+      .mobile-menu-overlay ul li {
+        margin: 15px 0;
+      }
+      .mobile-menu-overlay ul li a {
+        text-decoration: none;
+        color: #e0e0e0;
+        font-size: 1.2rem;
+      }
+    }
+    /* Container/Card */
+    .container {
+      background: #2a2a2a;
+      width: 90%;
+      max-width: 800px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+      margin: 20px auto;
+      flex-grow: 1;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+    /* Text Display Area */
+    #text-display {
+      font-size: 1.1rem;
+      background: #3a3a3a;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      color: #e0e0e0;
+      width: 100%;
+      max-width: 1000px; /* Increase max-width for larger screens */
+      margin: 0 auto 20px auto;
+      text-align: justify; /* Justify text for equal line lengths */
+    }
+    /* Timer Container with Heading on Single Line */
+    #timer-container {
+      background: #444;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 15px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    #timer-container h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: #ff6b6b;
+    }
+    /* Text Input */
+    #text-input {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 1rem;
+      border: 2px solid #555;
+      border-radius: 8px;
+      background: #333;
+      color: #e0e0e0;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      display: none;
+      resize: vertical;
+    }
+    #text-input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    }
+    /* Timer */
+    #timer {
+      font-size: 1.2rem;
+      color: #ff6b6b;
+      margin-top: 0;
+      font-weight: 700;
+    }
+    /* Stats Section */
+    #stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .stat-item {
+      background: #333;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin: 5px;
+      flex: 1 1 40%;
+      text-align: center;
+      min-width: 140px;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      color: #e0e0e0;
+    }
+    /* Initially hide the stats until test is submitted */
+    #stats {
+      display: none;
+    }
+    /* Buttons */
+    button {
+      display: inline-block;
+      margin: 20px 5px 0 5px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      background: #007bff;
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    }
+    button:hover {
+      background: #0056b3;
+      transform: translateY(-2px);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    @media (max-width: 600px) {
+      #text-display {
+        font-size: 1rem;
+      }
+      #text-input {
+        font-size: 1rem;
+      }
+      .stat-item {
+        flex: 1 1 45%;
+        font-size: 0.9rem;
+      }
+    }
+    /* Footer */
+    footer {
+      background: #1c1c1c;
+      padding: 20px 0;
+      text-align: center;
+      color: #e0e0e0;
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .footer-logo img.footer-logo-img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .footer-links li {
+      margin: 0 15px;
+    }
+    .footer-links li a {
+      text-decoration: none;
+      color: #e0e0e0;
+      transition: color 0.3s;
+    }
+    .footer-links li a:hover {
+      color: #007bff;
+    }
+    .footer-copy {
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header>
+    <nav class="main-nav">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <!-- Replace 'logo.png' with your actual logo URL -->
+          <img src="weblogo.jpg" alt="" class="logo-img" />
+          toolsMATE
+        </div>
+        <ul class="nav-links">
+          <li><a href="https://toolsmate.github.io/index.html">HOME</a></li>
+          <li><a href="https://toolsmate.github.io/privacy.html">PRIVACY</a></li>
+          <li><a href="https://toolsmate.github.io/aboutme.html">ABOUT ME</a></li>
+          <li><a href="https://toolsmate.github.io/contactme.html">CONTACT ME</a></li>
+        </ul>
+        <div class="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
+  <!-- Mobile Menu Overlay (Visible in Mobile Only) -->
+  <div class="mobile-menu-overlay">
+    <ul class="mobile-nav-links">
+      <li><a href="https://toolsmate.github.io/index.html">HOME</a></li>
+      <li><a href="https://toolsmate.github.io/privacy.html">PRIVACY</a></li>
+      <li><a href="https://toolsmate.github.io/aboutme.html">ABOUT ME</a></li>
+      <li><a href="https://toolsmate.github.io/contactme.html">CONTACT ME</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content Container -->
+  <div class="container">
+    <h1>TYPING TUTOR</h1>
+    <div id="text-display">
+      Education is the foundation of personal and societal growth. It equips individuals with the knowledge and skills necessary to navigate the world and achieve their goals. Access to quality education is essential for empowering people to make informed decisions, contribute to their communities, and succeed in their careers. With the advent of online learning platforms, education has become more accessible, enabling people worldwide to learn at their own pace and convenience.
+    </div>
+    <!-- Timer Container with Heading on a Single Line -->
+    <div id="timer-container">
+      <h3>TIME LEFT :</h3>
+      <div id="timer">15:00</div>
+    </div>
+    <textarea id="text-input" rows="5" placeholder="Start typing here..."></textarea>
+    <div id="stats">
+      <div class="stat-item">Total Keystrokes: <span id="total-keystrokes">0</span></div>
+      <div class="stat-item">Correct Keystrokes: <span id="correct-keystrokes">0</span></div>
+      <div class="stat-item">Missed Words: <span id="missed-words">0</span></div>
+      <div class="stat-item">Extra Words: <span id="extra-words">0</span></div>
+      <div class="stat-item">Incorrect Words: <span id="incorrect-words">0</span></div>
+      <div class="stat-item">Accuracy: <span id="accuracy">0%</span></div>
+      <div class="stat-item">Time Taken: <span id="total-time">0</span></div>
+      <div class="stat-item">WPM: <span id="wpm">0</span></div>
+    </div>
+    <div style="text-align: center;">
+      <button onclick="startTest()">START TEST</button>
+      <button onclick="submitTest()" style="display:none;">SUBMIT TEST</button>
+      <button onclick="resetTypingTutor()">RESET</button>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer>
+      <p class="footer-copy">&copy; 2025 toolsMATE. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const textDisplay = document.getElementById('text-display').innerText.trim();
+    const textInput = document.getElementById('text-input');
+    const totalKeystrokesEl = document.getElementById('total-keystrokes');
+    const correctKeystrokesEl = document.getElementById('correct-keystrokes');
+    const missedWordsEl = document.getElementById('missed-words');
+    const extraWordsEl = document.getElementById('extra-words');
+    const incorrectWordsEl = document.getElementById('incorrect-words');
+    const accuracyEl = document.getElementById('accuracy');
+    const timerEl = document.getElementById('timer');
+    const totalTimeEl = document.getElementById('total-time');
+    const wpmEl = document.getElementById('wpm');
+    const startButton = document.querySelector('button[onclick="startTest()"]');
+    const submitButton = document.querySelector('button[onclick="submitTest()"]');
+
+    let totalKeystrokes = 0;
+    let correctKeystrokes = 0;
+    let missedWords = 0;
+    let extraWords = 0;
+    let incorrectWords = 0;
+    let timer;
+    let timeLeft = 900; // in seconds (15 minutes)
+
+    // Global variables for additional parameters.
+    let startTime = 0;
+    let finalCorrectWords = 0;
+
+    // Split the reference text into words.
+    const referenceWords = textDisplay.split(' ');
+
+    // Build a frequency map for reference words.
+    const refFreq = {};
+    referenceWords.forEach(word => {
+      refFreq[word] = (refFreq[word] || 0) + 1;
+    });
+
+    function calculateLevenshteinDistance(a, b) {
+      const matrix = Array.from({ length: a.length + 1 }, () => []);
+      for (let i = 0; i <= a.length; i++) {
+        for (let j = 0; j <= b.length; j++) {
+          if (i === 0) matrix[i][j] = j;
+          else if (j === 0) matrix[i][j] = i;
+          else if (a[i - 1] === b[j - 1]) matrix[i][j] = matrix[i - 1][j - 1];
+          else matrix[i][j] = 1 + Math.min(matrix[i - 1][j], matrix[i][j - 1], matrix[i - 1][j - 1]);
+        }
+      }
+      return matrix[a.length][b.length];
+    }
+
+    textInput.addEventListener('input', updateStats);
+
+    function updateStats() {
+      const inputText = textInput.value;
+      totalKeystrokes = inputText.length;
+      totalKeystrokesEl.textContent = totalKeystrokes;
+
+      // Split the input into words (filtering out empty strings).
+      const inputWords = inputText.trim().split(/\s+/).filter(word => word.length > 0);
+
+      // Reset counters for each update.
+      correctKeystrokes = 0;
+      missedWords = 0;
+      extraWords = 0;
+      incorrectWords = 0;
+      let correctWordsCount = 0; // local count for correctly typed words
+
+      // Track how many times each input word has been processed.
+      const inputWordCount = {};
+      // Track which reference word indices have been used.
+      const usedIndices = new Set();
+
+      inputWords.forEach((word) => {
+        inputWordCount[word] = (inputWordCount[word] || 0) + 1;
+        const allowedCount = refFreq[word] !== undefined ? refFreq[word] : 1;
+        if (inputWordCount[word] > allowedCount) {
+          extraWords++;
+          return;
+        }
+        let closestMatch = Infinity;
+        let matchedIndex = -1;
+        referenceWords.forEach((refWord, refIdx) => {
+          if (!usedIndices.has(refIdx)) {
+            const distance = calculateLevenshteinDistance(word, refWord);
+            if (distance < closestMatch) {
+              closestMatch = distance;
+              matchedIndex = refIdx;
+            }
+          }
+        });
+        if (matchedIndex !== -1) {
+          usedIndices.add(matchedIndex);
+          if (closestMatch === 0) {
+            correctKeystrokes += word.length + 1;
+            correctWordsCount++;
+          } else {
+            incorrectWords++;
+          }
+        } else {
+          incorrectWords++;
+        }
+      });
+
+      finalCorrectWords = correctWordsCount;
+      missedWords = referenceWords.length - usedIndices.size;
+      referenceWords.forEach((word, idx) => {
+        if (!usedIndices.has(idx)) {
+          correctKeystrokes -= (word.length + 1);
+        }
+      });
+      correctKeystrokes = Math.max(0, correctKeystrokes);
+
+      correctKeystrokesEl.textContent = correctKeystrokes;
+      missedWordsEl.textContent = missedWords;
+      extraWordsEl.textContent = extraWords;
+      incorrectWordsEl.textContent = incorrectWords;
+
+      const accuracy = totalKeystrokes > 0 ? ((correctKeystrokes / totalKeystrokes) * 100).toFixed(2) : 0;
+      accuracyEl.textContent = `${accuracy}%`;
+    }
+
+    function startTest() {
+      textInput.style.display = 'block';
+      textInput.focus();
+      startButton.style.display = 'none';
+      submitButton.style.display = 'inline-block';
+      startTime = Date.now();
+      timer = setInterval(() => {
+        timeLeft--;
+        const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+        const seconds = (timeLeft % 60).toString().padStart(2, '0');
+        timerEl.textContent = `${minutes}:${seconds}`;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          submitTest();
+        }
+      }, 1000);
+    }
+
+    function submitTest() {
+      clearInterval(timer);
+      textInput.disabled = true;
+      const endTime = Date.now();
+      const totalTimeTakenSeconds = Math.floor((endTime - startTime) / 1000);
+      totalTimeEl.textContent = formatTime(totalTimeTakenSeconds);
+      const minutesTaken = totalTimeTakenSeconds / 60;
+      const wpm = minutesTaken > 0 ? (finalCorrectWords / minutesTaken).toFixed(2) : 0;
+      wpmEl.textContent = wpm;
+      // Show the stats after test submission
+      document.getElementById('stats').style.display = "flex";
+      alert('Test submitted! Check your stats below.');
+    }
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
+      const secs = (seconds % 60).toString().padStart(2, '0');
+      return `${minutes}:${secs}`;
+    }
+
+    function resetTypingTutor() {
+      clearInterval(timer);
+      textInput.value = '';
+      textInput.disabled = false;
+      textInput.style.display = 'none';
+      startButton.style.display = 'inline-block';
+      submitButton.style.display = 'none';
+      timeLeft = 900;
+      timerEl.textContent = '15:00';
+      totalKeystrokesEl.textContent = '0';
+      correctKeystrokesEl.textContent = '0';
+      missedWordsEl.textContent = '0';
+      extraWordsEl.textContent = '0';
+      incorrectWordsEl.textContent = '0';
+      accuracyEl.textContent = '0%';
+      totalTimeEl.textContent = '0';
+      wpmEl.textContent = '0';
+      startTime = 0;
+      finalCorrectWords = 0;
+    }
+    
+    // Navigation Toggle Script for Mobile:
+    // When the hamburger is clicked, toggle both the main-nav active class and the mobile overlay.
+    document.querySelector('.nav-toggle').addEventListener('click', function() {
+      document.querySelector('.main-nav').classList.toggle('active');
+      if (window.innerWidth <= 600) {
+        document.querySelector('.mobile-menu-overlay').classList.toggle('active');
+      }
+    });
+  </script>
+</body>
+</html>
