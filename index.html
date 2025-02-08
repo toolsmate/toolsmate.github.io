@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>toolsMATE</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts: Quantico -->
+  <link href="https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Dark-themed background */
+    body {
+      background: #121212; /* Deep black background */
+      color: #e0e0e0; /* Light gray text for contrast */
+      font-family: 'Quantico', sans-serif; /* Apply Quantico font */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    .hero-section {
+      background: linear-gradient(to bottom, #1e1e1e, #121212);
+      padding: 100px 0;
+      text-align: center;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-section h3 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .hero-section p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+    
+    .cta-icon {
+      font-size: 20px;
+      background-color: #333;
+      color: #ffffff;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+      display: block;
+      width: 100%;
+      max-width: 250px;
+      margin: 10px auto;
+    }
+    
+    .cta-icon:hover {
+      background-color: #555;
+      transform: scale(1.05);
+    }
+    
+    .navbar {
+      background-color: #1e1e1e !important;
+    }
+    .navbar a {
+      color: #e0e0e0 !important;
+    }
+
+    .navbar-brand-text {
+      color: #e0e0e0; /* White text color for the website name */
+      font-size: 24px;
+      font-weight: 700;
+      margin-left: 10px;
+    }
+
+    .footer {
+      background-color: #1e1e1e;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .hero-section {
+        padding: 70px 20px;
+      }
+      
+      .cta-icon {
+        max-width: 100%;
+      }
+      
+      .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="weblogo.jpg" alt="" style="width: 40px; height: 40px;">
+        <span class="navbar-brand-text">toolsMATE</span> <!-- Website name beside logo -->
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="privacy.html">PRIVACY</a></li>
+          <li class="nav-item"><a class="nav-link" href="aboutme.html">ABOUT ME</a></li>
+          <li class="nav-item"><a class="nav-link" href="contactme.html">CONTACT ME</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <h3 class="display-4">Welcome to toolsMATE</h3>
+      <p class="lead">A one-stop platform offering essential tools like QR code generator, marks calculator, and more.</p>
+      <div class="row justify-content-center align-items-center">
+        <div class="col-12 col-md-4 d-flex justify-content-center"><a href="markscalc.html" class="cta-icon">MARKS CALCULATOR</a></div>
+        <div class="col-12 col-md-4 d-flex justify-content-center"><a href="typingtutor.html" class="cta-icon">TYPING TUTOR</a></div>
+        <div class="col-12 col-md-4 d-flex justify-content-center"><a href="qrcodenenr.html" class="cta-icon">QR-CODE GENERATOR</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 toolsMATE. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
