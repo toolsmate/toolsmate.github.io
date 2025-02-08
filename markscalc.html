@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negative Marking Calculator - toolMATE</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Quantico -->
+    <link href="https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Dark-themed background */
+        body {
+            background: #121212;
+            color: #e0e0e0;
+            font-family: 'Quantico', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1e1e1e !important;
+        }
+        .navbar a {
+            color: #e0e0e0 !important;
+        }
+
+        .navbar-brand-text {
+            color: #e0e0e0;
+            font-size: 24px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+
+        .navbar-toggler-icon {
+            background-color: #1e1e1e;
+        }
+        
+        .navbar-toggler:hover {
+    background-color: rgb(36, 36, 36) !important; /* Light white effect */
+    border-radius: 5px; /* Smooth rounded corners */
+}
+        /* Main Container */
+        .container {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        input, select, button {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            font-size: 16px;
+            background: #2c2c2c;
+            color: white;
+        }
+
+        button {
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #0073e6;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+
+        footer {
+            background-color: #1e1e1e;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+
+        /* Input UI - arranging inputs in order */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="weblogo.jpg" alt="" style="width: 40px; height: 40px;">
+                <span class="navbar-brand-text">toolsMATE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="privacy.html">PRIVACY</a></li>
+                    <li class="nav-item"><a class="nav-link" href="aboutme.html">ABOUT ME</a></li>
+                    <!-- Negative Marking Calculator link removed from the navbar -->
+                    <li class="nav-item"><a class="nav-link" href="contactme.html">CONTACT ME</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Negative Marking Calculator</h1>
+        <form id="calculator-form">
+            <div class="form-group">
+                <label for="total-questions">Total Questions:</label>
+                <input type="number" id="total-questions" required>
+            </div>
+
+            <div class="form-group">
+                <label for="max-marks">Maximum Marks:</label>
+                <input type="number" id="max-marks" required>
+            </div>
+
+            <div class="form-group">
+                <label for="attempted-questions">Total Questions Attempted:</label>
+                <input type="number" id="attempted-questions" required>
+            </div>
+
+            <div class="form-group">
+                <label for="wrong-questions">Number of Wrong Questions:</label>
+                <input type="number" id="wrong-questions" required>
+            </div>
+
+            <div class="form-group">
+                <label for="negative-ratio">Negative Marking Ratio:</label>
+                <select id="negative-ratio" required>
+                    <option value="0">No Negative</option>
+                    <option value="1">1/1</option>
+                    <option value="0.5">1/2</option>
+                    <option value="0.33">1/3</option>
+                    <option value="0.25">1/4</option>
+                    <option value="0.2">1/5</option>
+                    <option value="0.17">1/6</option>
+                    <option value="0.14">1/7</option>
+                </select>
+            </div>
+
+            <button type="button" onclick="calculateScore()">Calculate</button>
+            <button type="reset">Clear</button>
+        </form>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>&copy; 2025 toolsMATE</footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function calculateScore() {
+            const totalQuestions = parseInt(document.getElementById('total-questions').value);
+            const maxMarks = parseInt(document.getElementById('max-marks').value);
+            const attemptedQuestions = parseInt(document.getElementById('attempted-questions').value);
+            const wrongQuestions = parseInt(document.getElementById('wrong-questions').value);
+            const negativeRatio = parseFloat(document.getElementById('negative-ratio').value);
+
+            if (attemptedQuestions > totalQuestions) {
+                alert("Attempted questions cannot exceed total questions.");
+                return;
+            }
+
+            if (wrongQuestions > attemptedQuestions) {
+                alert("Wrong questions cannot exceed attempted questions.");
+                return;
+            }
+
+            const correctQuestions = attemptedQuestions - wrongQuestions;
+            const marksPerQuestion = maxMarks / totalQuestions;
+            const score = (correctQuestions * marksPerQuestion) - (wrongQuestions * marksPerQuestion * negativeRatio);
+
+            document.getElementById('result').innerText = `Your final score is: ${score.toFixed(2)}`;
+        }
+    </script>
+
+</body>
+</html>
