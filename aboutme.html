@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me - toolMATE</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts: Quantico -->
+  <link href="https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Dark-themed background */
+    body {
+      background: #121212; /* Deep black background */
+      color: #e0e0e0; /* Light gray text for contrast */
+      font-family: 'Quantico', sans-serif; /* Apply Quantico font */
+    }
+    
+    .hero-section {
+      background: linear-gradient(to bottom, #1e1e1e, #121212);
+      padding: 120px 0 80px 0; /* Added extra padding to the top for space between navbar and heading */
+      text-align: center;
+    }
+
+    .content-section {
+      padding: 50px 0;
+    }
+
+    .navbar {
+      background-color: #1e1e1e !important;
+    }
+    .navbar a {
+      color: #e0e0e0 !important;
+    }
+
+    .navbar-brand-text {
+      color: #e0e0e0; /* White text color for the website name */
+      font-size: 24px;
+      font-weight: 700;
+      margin-left: 10px;
+    }
+
+    .profile-img {
+      width: 60%; /* Reduced by 40% (previously 100%) */
+      display: block;
+      margin: 0 auto;
+    }
+
+    .text-section {
+      margin-top: 20px; /* Added spacing between image and text */
+    }
+
+    .footer {
+      background-color: #1e1e1e;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    .contact-link {
+      color: #1e90ff; /* Light blue color for visibility */
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .contact-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Fix: Adjust spacing for mobile */
+    @media (max-width: 768px) {
+      .hero-section {
+        padding: 120px 0 60px 0; /* Adjusted padding for smaller screens */
+      }
+
+      .content-section {
+        padding-top: 30px; /* Adjusted spacing to maintain even gap */
+      }
+
+      .text-section {
+        margin-top: 15px; /* Adjusted for better spacing on mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="weblogo.jpg" alt="" style="width: 40px; height: 40px;">
+        <span class="navbar-brand-text">toolsMATE</span> <!-- Website name beside logo -->
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="privacy.html">PRIVACY</a></li>
+          <li class="nav-item"><a class="nav-link active" href="aboutme.html">ABOUT ME</a></li>
+          <li class="nav-item"><a class="nav-link" href="contactme.html">CONTACT ME</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <h1 class="display-4">ABOUT ME</h1>
+      <p class="lead">Discover more about the creator of toolsMATE and the journey behind this platform.</p>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section class="content-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4 text-center">
+          <img src="myselflappu.jpg" alt="Creator's Photo" class="img-fluid rounded-circle profile-img">
+        </div>
+        <div class="col-md-8 text-section">
+          <h2>Hi, I'm ABHINAV</h2>
+          <p>Welcome to toolsMATE! I'm a passionate developer with a love for creating tools that simplify everyday tasks. With a background in Research Field, I've always been driven to find solutions that make life easier and more efficient.</p>
+          <p>toolsMATE was born out of the desire to provide a one-stop platform offering essential tools like QR code generators, marks calculators, and more. My goal is to continuously expand this platform, adding new features and tools that cater to your needs.</p>
+          <p>Thank you for visiting toolsMATE. I hope you find the tools helpful and easy to use. If you have any suggestions or feedback, feel free to reach out through the <a href="contactme.html" class="contact-link">CONTACT ME</a> tab.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 toolsMATE. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
