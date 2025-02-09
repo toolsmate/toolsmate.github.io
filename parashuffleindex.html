@@ -135,17 +135,17 @@
       <p class="lead">Rearrange the sentences to form a coherent paragraph.</p>
       <!-- CTA Icons Section -->
       <div class="cta-icons">
-        <a href="parashuffleorg.html" class="cta-icon">PRACTICE TEST - 1</a>
-        <a href="#link2" class="cta-icon">PRACTICE TEST - 2</a>
-        <a href="#link3" class="cta-icon">PRACTICE TEST - 3</a>
-        <a href="#link4" class="cta-icon">PRACTICE TEST - 4</a>
-        <a href="#link5" class="cta-icon">PRACTICE TEST - 5</a>
-        <a href="#link6" class="cta-icon">PRACTICE TEST - 6</a>
-        <a href="#link7" class="cta-icon">PRACTICE TEST - 7</a>
-        <a href="#link7" class="cta-icon">PRACTICE TEST - 8</a>
-        <a href="#link8" class="cta-icon">PRACTICE TEST - 9</a>
-        <a href="#link9" class="cta-icon">PRACTICE TEST - 10</a>
-        <a href="#link10" class="cta-icon">PRACTICE TEST - 11</a>
+        <a href="https://toolsmate.github.io/parashuffleorg.html" class="cta-icon">PRACTICE TEST - 1</a>
+        <a href="https://toolsmate.github.io/test2" class="cta-icon">PRACTICE TEST - 2</a>
+        <a href="https://toolsmate.github.io/test3" class="cta-icon">PRACTICE TEST - 3</a>
+        <a href="https://toolsmate.github.io/test4" class="cta-icon">PRACTICE TEST - 4</a>
+        <a href="https://toolsmate.github.io/test5" class="cta-icon">PRACTICE TEST - 5</a>
+        <a href="https://toolsmate.github.io/test6" class="cta-icon">PRACTICE TEST - 6</a>
+        <a href="https://toolsmate.github.io/test7" class="cta-icon">PRACTICE TEST - 7</a>
+        <a href="https://toolsmate.github.io/test8" class="cta-icon">PRACTICE TEST - 8</a>
+        <a href="https://toolsmate.github.io/test9" class="cta-icon">PRACTICE TEST - 9</a>
+        <a href="https://toolsmate.github.io/test10" class="cta-icon">PRACTICE TEST - 10</a>
+        <a href="https://toolsmate.github.io/test11" class="cta-icon">PRACTICE TEST - 11</a>
       </div>
     </div>
   </section>
@@ -176,8 +176,11 @@
 
   <!-- Bootstrap Bundle JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Custom Script for Popup -->
+  <!-- Custom Script for Popup and Dynamic Link Redirection -->
   <script>
+    // Variable to store the clicked CTA icon's URL
+    var selectedLink = '';
+
     // Initialize the modal
     var startTestModal = new bootstrap.Modal(document.getElementById('startTestModal'));
 
@@ -185,6 +188,7 @@
     document.querySelectorAll('.cta-icon').forEach(function(icon) {
       icon.addEventListener('click', function(e) {
         e.preventDefault(); // Prevent the default link behavior
+        selectedLink = this.getAttribute('href'); // Store the URL from the clicked icon
         startTestModal.show(); // Show the modal popup
       });
     });
@@ -192,8 +196,10 @@
     // Handle the "Start" button click
     document.getElementById('startTestButton').addEventListener('click', function() {
       startTestModal.hide();
-      // Redirect to the specified link (replace the URL below with your desired destination)
-      window.location.href = 'https://toolsmate.github.io/';
+      // Redirect to the link stored from the clicked CTA icon
+      if (selectedLink) {
+        window.location.href = selectedLink;
+      }
     });
   </script>
 </body>
