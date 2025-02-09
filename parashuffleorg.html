@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parajumble Quiz - toolsMATE</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts: Quantico -->
+  <link href="https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #121212;
+      color: #e0e0e0;
+      font-family: 'Quantico', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .hero-section {
+      background: linear-gradient(to bottom, #1e1e1e, #121212);
+      padding: 100px 0;
+      text-align: center;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Header styling for question number and timer */
+    #questionHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    #questionNumber, #timer {
+      flex: 1;
+      border-bottom: 1px solid #555;
+      padding-bottom: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+    #questionNumber {
+      text-align: left;
+    }
+    #timer {
+      text-align: right;
+    }
+    .cta-icon {
+      font-size: 20px;
+      background-color: #333;
+      color: #ffffff;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+      display: block;
+      width: 100%;
+      max-width: 250px;
+      margin: 10px auto;
+    }
+    .cta-icon:hover {
+      background-color: #555;
+      transform: scale(1.05);
+    }
+    .navbar {
+      background-color: #1e1e1e !important;
+    }
+    .navbar a {
+      color: #e0e0e0 !important;
+    }
+    .navbar-brand-text {
+      color: #e0e0e0;
+      font-size: 24px;
+      font-weight: 700;
+      margin-left: 10px;
+    }
+    .footer {
+      background-color: #1e1e1e;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+    .quiz-container {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      margin: 20px auto;
+      text-align: left;
+    }
+    .phrase {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .phrase-letter {
+      font-weight: bold;
+      margin-right: 10px;
+      width: 30px;
+      flex-shrink: 0;
+    }
+    .phrase-text {
+      flex: 1;
+    }
+    .option-btn {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      text-align: left;
+      cursor: pointer;
+    }
+    .option-btn.selected {
+      background-color: #555;
+    }
+    .option-number {
+      font-weight: bold;
+      margin-right: 5px;
+      width: 30px;
+      display: inline-block;
+    }
+    .option-text {
+      display: inline;
+    }
+    /* Modified control buttons layout */
+    .control-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .control-buttons .first-row {
+      display: flex;
+      justify-content: space-between;
+    }
+    .control-buttons .first-row button {
+      flex: 1;
+      margin: 0 5px;
+    }
+    /* Styling for result boxes */
+    .result-box {
+      border: 1px solid #e0e0e0;
+      padding: 10px;
+      margin: 5px;
+      text-align: center;
+      display: block;
+    }
+    #finalResult {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      font-size: 1.2rem;
+    }
+    /* Mobile-specific styles to reduce button and text sizes */
+    @media (max-width: 768px) {
+      .hero-section {
+        padding: 70px 20px;
+      }
+      .cta-icon {
+        max-width: 100%;
+        font-size: 16px;
+        padding: 10px;
+      }
+      .option-btn, .control-buttons button, .result-box {
+        font-size: 0.85rem;
+        padding: 5px 8px;
+      }
+      .option-number, .option-text {
+        font-size: 0.85rem;
+      }
+      #questionNumber, #timer {
+        font-size: 1rem;
+      }
+      .control-buttons .first-row button {
+        margin: 0 3px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar with id "navbar" -->
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://toolsmate.github.io/">
+        <img src="weblogo.jpg" alt="" style="width: 40px; height: 40px;">
+        <span class="navbar-brand-text">toolsMATE</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="https://toolsmate.github.io/">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="privacy.html">PRIVACY</a></li>
+          <li class="nav-item"><a class="nav-link" href="aboutme.html">ABOUT ME</a></li>
+          <li class="nav-item"><a class="nav-link" href="contactme.html">CONTACT ME</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section for Parajumble Quiz -->
+  <section class="hero-section">
+    <div class="container">
+      <h3 class="display-4">PARA-SHUFFLE</h3>
+      <p class="lead">Rearrange the sentences to form a coherent paragraph.</p>
+
+      <div class="quiz-container" id="quizContainer">
+        <!-- Question number and Timer Header -->
+        <div id="questionHeader">
+          <div id="questionNumber" class="question-number"></div>
+          <div id="timer"></div>
+        </div>
+        
+        <div id="phrases">
+          <!-- Scrambled phrases will be inserted here -->
+        </div>
+
+        <div class="options mt-4" id="option-buttons">
+          <!-- Options (and marked message, if applicable) will be injected here -->
+        </div>
+
+        <!-- Control Buttons Layout -->
+        <div class="control-buttons">
+          <div class="first-row">
+            <button id="prev-btn" class="btn btn-outline-light" onclick="prevQuestion()">PREVIOUS</button>
+            <button id="mark-btn" class="btn btn-outline-light" onclick="markAndNext()">MARK & NEXT</button>
+            <button id="next-btn" class="btn btn-outline-light" onclick="nextQuestion()">NEXT</button>
+          </div>
+          <div>
+            <button id="clear-btn" class="btn btn-outline-light" onclick="clearSelection()" style="width: 100%;">CLEAR</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Final Result Screen -->
+      <div id="finalResult"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 toolsMATE. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // Global variables to track quiz state.
+    let currentQuestionIndex = 0;
+    let userAnswers = []; // Selected answer for each question.
+    let questionStates = []; // Generated state for each question.
+    let timeRemaining = 600; // 10 minutes in seconds
+    let timerInterval;
+    let quizStartTime = 0;  // Quiz start timestamp
+
+    // Variables for review mode.
+    let reviewMode = false;
+    let reviewIndex = 0;
+    
+    // Array for marked question indices.
+    let markedQuestions = [];
+
+    const quizQuestions = [
+      {
+        correctOrder: 'ABCD',
+        phrases: {
+          A: 'In recent years, the burgeoning trend of digitalization has significantly transformed the landscape of traditional industries.',
+          B: 'This paradigm shift, driven by rapid technological evolution, has compelled businesses to reevaluate their operational strategies.',
+          C: 'Critics, however, contend that such relentless advancement often sidelines invaluable human expertise, precipitating unforeseen challenges.',
+          D: 'Consequently, policymakers find themselves grappling with the dual imperative of fostering innovation while safeguarding workforce interests.'
+        }
+      },
+      {
+        correctOrder: 'BACD',
+        phrases: {
+          A: 'A resurgence in traditional art forms has been witnessed in urban centers.',
+          B: 'This cultural renaissance reflects a broader desire to reconnect with ancestral roots.',
+          C: 'Modern artists are blending age-old techniques with contemporary expressions.',
+          D: 'The phenomenon has sparked debates about the preservation versus evolution of cultural identity.'
+        }
+      },
+      {
+        correctOrder: 'DABC',
+        phrases: {
+          A: 'Methodical experimentation remains the cornerstone of scientific progress.',
+          B: 'Innovative research methodologies are continually challenging conventional wisdom.',
+          C: 'Empirical evidence, gathered through rigorous trials, underpins groundbreaking discoveries.',
+          D: 'Scientists emphasize that curiosity-driven exploration is vital for long-term advancements.'
+        }
+      },
+      {
+        correctOrder: 'ACDB',
+        phrases: {
+          A: 'The advent of social media has reshaped interpersonal communication on a global scale.',
+          B: 'Platforms now serve as vital conduits for information dissemination and public discourse.',
+          C: 'This digital phenomenon has, however, raised concerns over privacy and the spread of misinformation.',
+          D: 'Consequently, regulatory bodies are grappling with the challenge of balancing freedom and security.'
+        }
+      },
+      {
+        correctOrder: 'BCAD',
+        phrases: {
+          B: 'This interconnectivity fueled by rapid communication and transport advancements has fostered unprecedented global collaboration.',
+          C: 'Skeptics however argue that the homogenization of cultures may erode local identities and traditions.',
+          A: 'In the contemporary era the rise of globalization has reshaped the contours of economic and cultural exchanges.',
+          D: 'Consequently governments and communities are striving to balance global integration with cultural preservation.'
+        }
+      },
+      {
+        correctOrder: 'DCBA',
+        phrases: {
+          D: 'As a result international bodies and local governments are engaging in dialogues to reconcile ecological ambitions with economic realities.',
+          C: 'Detractors however caution that rapid policy changes may disrupt established economic frameworks.',
+          B: 'This shift propelled by scientific revelations and grassroots activism has prompted industries to reassess their ecological footprint.',
+          A: 'Over the past decade environmental sustainability has emerged as a pivotal concern in public discourse.'
+        }
+      },
+      {
+        correctOrder: 'CADB',
+        phrases: {
+          C: 'Critics however warn that such rapid progress might exacerbate disparities in employment opportunities.',
+          A: 'Recent technological innovations have catalyzed transformative changes across various sectors.',
+          D: 'Thus stakeholders are deliberating on measures to ensure that technological advancement is inclusive and sustainable.',
+          B: 'Fueled by breakthroughs in artificial intelligence and robotics organizations are redefining operational paradigms.'
+        }
+      },
+      {
+        correctOrder: 'BADC',
+        phrases: {
+          B: 'Advances in diagnostics and treatment methodologies have not only improved patient outcomes but also restructured care delivery.',
+          A: 'The healthcare industry has witnessed a remarkable evolution in response to emerging medical technologies.',
+          D: 'Consequently policymakers are tasked with implementing reforms that promote equitable access to modern healthcare.',
+          C: 'Some experts argue that this technological leap may inadvertently widen the gap between affluent and underserved populations.'
+        }
+      },
+      {
+        correctOrder: 'CBDA',
+        phrases: {
+          C: 'However detractors highlight concerns over diminished team cohesion and potential burnout.',
+          B: 'Driven by the proliferation of digital tools and shifting workforce expectations companies are embracing flexible work arrangements.',
+          D: 'Therefore businesses are exploring strategies to balance productivity with employee well-being in a virtual environment.',
+          A: 'The advent of remote work has redefined traditional office dynamics in unprecedented ways.'
+        }
+      },
+      {
+        correctOrder: 'DABC',
+        phrases: {
+          D: 'Thus educational leaders are seeking a balanced approach that leverages technology while preserving traditional pedagogical values.',
+          A: 'Education systems worldwide are undergoing significant transformation in response to digital learning trends.',
+          B: 'Integrating online platforms and interactive tools institutions are reshaping the conventional classroom experience.',
+          C: 'Yet some critics contend that over-reliance on technology may undermine critical interpersonal skills.'
+        }
+      },
+      {
+        correctOrder: 'CDAB',
+        phrases: {
+          C: 'Urban planners however express concerns over infrastructural strain and social inequality.',
+          D: 'In response municipal authorities are implementing sustainable strategies to accommodate rapid urban growth.',
+          A: 'Urbanization has accelerated at an unprecedented pace reshaping the demographic landscape of major cities.',
+          B: 'This trend spurred by migration and economic opportunities has led to a surge in metropolitan development.'
+        }
+      },
+      {
+        correctOrder: 'BDAC',
+        phrases: {
+          B: 'Technological advancements in solar wind and hydroelectric power have made green energy more accessible and cost-effective.',
+          D: 'Consequently energy policymakers are investing in research and grid modernization to ensure a smooth transition to renewables.',
+          A: 'The global shift towards renewable energy has gained momentum as nations seek sustainable power alternatives.',
+          C: 'Skeptics however point to challenges such as intermittency and infrastructure readiness.'
+        }
+      },
+      {
+        correctOrder: 'ACBD',
+        phrases: {
+          A: 'In the digital era cybersecurity has emerged as a critical concern for individuals and organizations alike.',
+          C: 'Critics argue that constant vigilance and resource allocation towards security may impede other areas of innovation.',
+          B: 'The increasing sophistication of cyber threats has necessitated a reevaluation of data protection protocols.',
+          D: 'Thus stakeholders are striving to develop balanced approaches that safeguard digital assets without stifling progress.'
+        }
+      },
+      {
+        correctOrder: 'DCAB',
+        phrases: {
+          D: 'In response financial institutions are collaborating with regulators to craft frameworks that foster innovation while ensuring stability.',
+          C: 'However some industry veterans caution that rapid digital transformation may introduce regulatory and security challenges.',
+          A: 'FinTech innovations have revolutionized traditional banking and financial services in recent years.',
+          B: 'Driven by advancements in blockchain and mobile technologies consumers now enjoy more accessible and efficient financial solutions.'
+        }
+      },
+      {
+        correctOrder: 'ADCB',
+        phrases: {
+          A: 'The proliferation of data analytics has transformed decision-making processes across various sectors.',
+          D: 'Consequently companies are adopting hybrid approaches that integrate data-driven insights with traditional expertise.',
+          C: 'Critics however warn that overdependence on algorithms may diminish human intuition and creativity.',
+          B: 'Harnessing big data and predictive models organizations can now derive actionable insights with greater precision.'
+        }
+      },
+      {
+        correctOrder: 'DBCA',
+        phrases: {
+          D: 'Thus industry leaders are working to develop ethical frameworks that balance AI innovation with societal well-being.',
+          B: 'This integration marked by machine learning algorithms and automation is reshaping industry benchmarks.',
+          C: 'Detractors however express concerns about ethical implications and potential job displacements.',
+          A: 'Artificial intelligence has progressively integrated into everyday business operations revolutionizing productivity.'
+        }
+      },
+      {
+        correctOrder: 'CABD',
+        phrases: {
+          C: 'However skeptics argue that the rapid digitization of urban areas may pose privacy and security risks.',
+          A: 'Smart city initiatives have gained traction as urban centers embrace digital solutions for improved living conditions.',
+          B: 'Innovative infrastructure and interconnected technologies are enabling efficient resource management and enhanced public services.',
+          D: 'Therefore city planners are implementing robust safeguards to ensure that technological advancements benefit all residents.'
+        }
+      },
+      {
+        correctOrder: 'BCDA',
+        phrases: {
+          B: 'The viral nature of digital content has reshaped how information is disseminated and consumed across demographics.',
+          C: 'Critics however caution that this influence can lead to misinformation and reduced attention spans.',
+          D: 'Consequently regulators and tech companies are exploring measures to enhance transparency and accountability on these platforms.',
+          A: 'Social media platforms have profoundly impacted modern communication and public discourse.'
+        }
+      },
+      {
+        correctOrder: 'DABC',
+        phrases: {
+          D: 'Thus retailers are increasingly integrating omni-channel strategies to cater to evolving consumer preferences.',
+          A: 'E-commerce has experienced a meteoric rise transforming the landscape of retail and consumer behavior.',
+          B: 'Fueled by advancements in logistics and digital payment systems online marketplaces have redefined shopping experiences.',
+          C: 'Some industry observers warn that the shift towards digital retail may marginalize traditional brick-and-mortar stores.'
+        }
+      },
+      {
+        correctOrder: 'ACDB',
+        phrases: {
+          A: 'Digital privacy has emerged as a critical issue amid the increasing digitization of personal data.',
+          C: 'Skeptics argue that stringent privacy regulations might hinder technological progress and data-driven innovation.',
+          D: 'As a result policymakers are engaged in crafting balanced legislation that protects personal information while encouraging growth.',
+          B: 'Advancements in tracking technologies and data analytics have raised important questions about individual privacy rights.'
+        }
+      },
+      {
+        correctOrder: 'CBAD',
+        phrases: {
+          C: 'Critics however voice concerns about ethical dilemmas and long-term ecological impacts.',
+          B: 'These advances driven by genetic engineering and bioinformatics are paving the way for unprecedented scientific progress.',
+          A: 'Biotechnology breakthroughs are reshaping the frontiers of medicine and agriculture with groundbreaking innovations.',
+          D: 'Consequently researchers and regulators are collaborating to ensure that biotechnological innovations are both safe and sustainable.'
+        }
+      },
+      {
+        correctOrder: 'CADB',
+        phrases: {
+          C: 'Skeptics caution that the rapid expansion of these services may strain existing infrastructure and regulatory frameworks.',
+          A: 'Urban mobility is being reimagined through the advent of microtransit solutions that cater to dynamic urban lifestyles.',
+          D: 'Thus city officials are working to integrate microtransit into broader urban planning strategies to ensure sustainable growth.',
+          B: 'Innovative transportation models including ride-sharing and on-demand services are enhancing commuter convenience.'
+        }
+      },
+      {
+        correctOrder: 'ADBC',
+        phrases: {
+          A: 'The rise of sustainable agriculture practices reflects a growing commitment to environmental stewardship in farming.',
+          D: 'Therefore agricultural experts and policymakers are collaborating to promote practices that balance productivity with ecological responsibility.',
+          B: 'Innovations in organic farming and resource-efficient technologies are transforming agricultural production.',
+          C: 'Detractors however argue that the transition to sustainable methods may entail significant short-term challenges.'
+        }
+      },
+      {
+        correctOrder: 'DCBA',
+        phrases: {
+          D: 'Consequently educators are exploring hybrid models that integrate the best aspects of in-person and online learning.',
+          C: 'Critics however note that the lack of face-to-face interaction may impair social and cognitive development.',
+          B: 'Leveraging online platforms and digital resources educational institutions are redefining accessibility and instructional methods.',
+          A: 'Remote education has rapidly evolved in response to shifting global circumstances transforming traditional learning environments.'
+        }
+      },
+      {
+        correctOrder: 'BDCA',
+        phrases: {
+          B: 'Technological advancements such as electric vehicles and autonomous driving systems are redefining how people commute.',
+          D: 'Thus industry stakeholders are working closely with regulators to foster a transition that benefits all.',
+          C: 'However some experts caution that rapid changes may disrupt traditional transport industries and labor markets.',
+          A: 'Recent innovations in transportation have revolutionized mobility and urban connectivity.'
+        }
+      },    
+    ];
+
+    // Shuffle function.
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // Permute function.
+    function permute(arr) {
+      if (arr.length === 0) return [[]];
+      const result = [];
+      for (let i = 0; i < arr.length; i++) {
+        const rest = permute(arr.slice(0, i).concat(arr.slice(i + 1)));
+        for (const r of rest) {
+          result.push([arr[i]].concat(r));
+        }
+      }
+      return result;
+    }
+
+    // Generate options.
+    function generateOptionsFromAnswer(correctAnswer) {
+      const letters = ["A", "B", "C", "D"];
+      const allPermutations = permute(letters).map(arr => arr.join(""));
+      const candidateOptions = allPermutations.filter(opt => opt !== correctAnswer);
+      shuffle(candidateOptions);
+      const distractors = candidateOptions.slice(0, 3);
+      const options = distractors.concat(correctAnswer);
+      shuffle(options);
+      return options;
+    }
+
+    // Timer functions.
+    function startTimer() {
+      timeRemaining = 600;
+      timerInterval = setInterval(updateTimer, 1000);
+      updateTimer();
+    }
+
+    function updateTimer() {
+      const minutes = Math.floor(timeRemaining / 60);
+      const seconds = timeRemaining % 60;
+      document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      if (timeRemaining <= 0) {
+        clearInterval(timerInterval);
+        submitQuiz();
+      } else {
+        timeRemaining--;
+      }
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+
+    // Load current question.
+    function loadQuestion() {
+      const currentQuestion = quizQuestions[currentQuestionIndex];
+      let state;
+      if (!questionStates[currentQuestionIndex]) {
+        const originalArray = [
+          { key: "A", text: currentQuestion.phrases["A"] },
+          { key: "B", text: currentQuestion.phrases["B"] },
+          { key: "C", text: currentQuestion.phrases["C"] },
+          { key: "D", text: currentQuestion.phrases["D"] }
+        ];
+        shuffle(originalArray);
+        const displayLetters = ["A", "B", "C", "D"];
+        let mapping = {};
+        let scrambledPhrases = [];
+        for (let i = 0; i < displayLetters.length; i++) {
+          let dispLetter = displayLetters[i];
+          mapping[dispLetter] = originalArray[i].key;
+          scrambledPhrases.push({ dispLetter: dispLetter, text: originalArray[i].text, originalKey: originalArray[i].key });
+        }
+        let inverseMapping = {};
+        for (const disp in mapping) {
+          inverseMapping[mapping[disp]] = disp;
+        }
+        const correctOrder = currentQuestion.correctOrder.split("");
+        const computedCorrectAnswer = correctOrder.map(letter => inverseMapping[letter]).join("");
+        const options = generateOptionsFromAnswer(computedCorrectAnswer);
+        state = { scrambledPhrases: scrambledPhrases, computedCorrectAnswer: computedCorrectAnswer, options: options };
+        questionStates[currentQuestionIndex] = state;
+      } else {
+        state = questionStates[currentQuestionIndex];
+      }
+      document.getElementById('questionNumber').textContent = `QUESTION - ${currentQuestionIndex + 1}`;
+      
+      let optionsHTML = "";
+      if (markedQuestions.indexOf(currentQuestionIndex) !== -1) {
+        optionsHTML += `<p style="color: orange; font-weight: bold; margin: 5px;">*MARKED FOR REVIEW</p>`;
+      }
+      state.options.forEach((option, index) => {
+        optionsHTML += `<button class="btn btn-outline-light option-btn" data-option="${option}">
+                          <span class="option-number">${index + 1}.</span> 
+                          <span class="option-text"> ${option}</span>
+                        </button>`;
+      });
+      const optionButtonsContainer = document.getElementById('option-buttons');
+      optionButtonsContainer.innerHTML = optionsHTML;
+      document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          selectOption(this.getAttribute('data-option'), this);
+        });
+      });
+      
+      const phrasesContainer = document.getElementById('phrases');
+      phrasesContainer.innerHTML = "";
+      state.scrambledPhrases.forEach(item => {
+        const phraseDiv = document.createElement('div');
+        phraseDiv.className = 'phrase';
+        const letterSpan = document.createElement('span');
+        letterSpan.className = 'phrase-letter';
+        letterSpan.textContent = item.dispLetter + '.';
+        const textSpan = document.createElement('span');
+        textSpan.className = 'phrase-text';
+        textSpan.textContent = ' ' + item.text;
+        phraseDiv.appendChild(letterSpan);
+        phraseDiv.appendChild(textSpan);
+        phrasesContainer.appendChild(phraseDiv);
+      });
+      
+      document.getElementById('prev-btn').disabled = (currentQuestionIndex === 0);
+      const nextBtn = document.getElementById('next-btn');
+      nextBtn.textContent = (currentQuestionIndex === quizQuestions.length - 1) ? 'SUBMIT' : 'NEXT';
+    }
+
+    // Option selection.
+    function selectOption(option, button) {
+      let markIndex = markedQuestions.indexOf(currentQuestionIndex);
+      if (markIndex !== -1) {
+        markedQuestions.splice(markIndex, 1);
+      }
+      const optionButtonsContainer = document.getElementById('option-buttons');
+      const firstChild = optionButtonsContainer.firstElementChild;
+      if (firstChild && firstChild.tagName.toLowerCase() === "p") {
+        firstChild.remove();
+      }
+      document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+      button.classList.add('selected');
+      userAnswers[currentQuestionIndex] = option;
+    }
+
+    function clearSelection() {
+      userAnswers[currentQuestionIndex] = null;
+      document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+    }
+
+    function nextQuestion() {
+      if (currentQuestionIndex < quizQuestions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+      } else {
+        submitQuiz();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion();
+      }
+    }
+
+    function markAndNext() {
+      if (markedQuestions.indexOf(currentQuestionIndex) === -1) {
+        markedQuestions.push(currentQuestionIndex);
+      }
+      if (currentQuestionIndex < quizQuestions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+      } else {
+        submitQuiz();
+      }
+    }
+
+    function submitQuiz() {
+      stopTimer();
+      let correctCount = 0;
+      for (let i = 0; i < quizQuestions.length; i++) {
+        const state = questionStates[i];
+        if (userAnswers[i] === state.computedCorrectAnswer) {
+          correctCount++;
+        }
+      }
+      let marks = 0;
+      for (let i = 0; i < quizQuestions.length; i++) {
+        const state = questionStates[i];
+        if (userAnswers[i] === null || userAnswers[i] === undefined) {
+          marks += 0;
+        } else if (userAnswers[i] === state.computedCorrectAnswer) {
+          marks += 2;
+        } else {
+          marks -= 0.5;
+        }
+      }
+      const timeTakenMs = Date.now() - quizStartTime;
+      const totalTimeSeconds = Math.floor(timeTakenMs / 1000);
+      const minutes = Math.floor(totalTimeSeconds / 60);
+      const seconds = totalTimeSeconds % 60;
+      
+      document.getElementById('quizContainer').style.display = 'none';
+      const resultDiv = document.getElementById('finalResult');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `
+        <div class="result-box">
+          CORRECT : ${correctCount} / ${quizQuestions.length}
+        </div>
+        <div class="result-box">
+          MARKS OBTAINED : ${marks}
+        </div>
+        <div class="result-box">
+        TIME TAKEN : ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}
+        </div>
+        <br>
+        <div style="margin: 10px 0;">
+          <button class="btn btn-outline-light" onclick="startQuiz()" style="width: 100%; margin-bottom: 10px;">RE-ATTEMPT QUIZ</button>
+        </div>
+        <div style="margin: 10px 0;">
+          <button class="btn btn-outline-light" onclick="startReview()" style="width: 100%; margin-bottom: 10px;">REVIEW SOLUTION</button>
+        </div>
+        <div style="margin: 10px 0;">
+          <button class="btn btn-outline-light" onclick="startMarkedReview()" style="width: 100%;">MARKED QUESTIONS</button>
+        </div>
+      `;
+    }
+
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      userAnswers = [];
+      questionStates = [];
+      markedQuestions = [];
+      document.getElementById('quizContainer').style.display = 'block';
+      document.getElementById('finalResult').style.display = 'none';
+      document.getElementById('next-btn').onclick = nextQuestion;
+      document.getElementById('prev-btn').onclick = prevQuestion;
+      document.getElementById('clear-btn').style.display = 'inline-block';
+      quizStartTime = Date.now();
+      startTimer();
+      loadQuestion();
+    }
+
+    // ***** Review Mode Functions (unchanged) *****
+    function loadReviewQuestion() {
+      const currentQuestion = quizQuestions[reviewIndex];
+      const state = questionStates[reviewIndex];
+      document.getElementById('questionNumber').textContent = `SOLUTION - ${reviewIndex + 1}`;
+      const phrasesContainer = document.getElementById('phrases');
+      phrasesContainer.innerHTML = '';
+      const correctOrder = currentQuestion.correctOrder.split('');
+      correctOrder.forEach(letter => {
+        const phraseDiv = document.createElement('div');
+        phraseDiv.className = 'phrase';
+        const letterSpan = document.createElement('span');
+        letterSpan.className = 'phrase-letter';
+        letterSpan.textContent = letter + '.';
+        const textSpan = document.createElement('span');
+        textSpan.className = 'phrase-text';
+        textSpan.textContent = ' ' + currentQuestion.phrases[letter];
+        phraseDiv.appendChild(letterSpan);
+        phraseDiv.appendChild(textSpan);
+        phrasesContainer.appendChild(phraseDiv);
+      });
+      const optionButtonsContainer = document.getElementById('option-buttons');
+      let reviewOptionsHTML = '';
+      const userAnswer = userAnswers[reviewIndex];
+      state.options.forEach(option => {
+          let style = '';
+          if(option === state.computedCorrectAnswer) {
+              style = 'border: 2px solid green; background-color: #228B22; margin: 5px;';
+          }
+          else if(userAnswer && userAnswer !== state.computedCorrectAnswer && option === userAnswer) {
+              style = 'border: 2px solid red; background-color: #dc3545; margin: 5px;';
+          }
+          reviewOptionsHTML += `<button class="btn btn-outline-light option-btn" style="${style}">${option}</button>`;
+      });
+      if (!userAnswer) {
+         reviewOptionsHTML = `<p style="color: orange; font-weight: bold; margin: 5px;">*NOT ANSWERED</p>` + reviewOptionsHTML;
+      }
+      optionButtonsContainer.innerHTML = reviewOptionsHTML;
+      document.getElementById('prev-btn').disabled = (reviewIndex === 0);
+      const nextBtn = document.getElementById('next-btn');
+      nextBtn.textContent = (reviewIndex === quizQuestions.length - 1) ? 'BACK TO RESULTS' : 'NEXT';
+    }
+
+    function nextReviewQuestion() {
+      if (reviewIndex < quizQuestions.length - 1) {
+        reviewIndex++;
+        loadReviewQuestion();
+      } else {
+        endReview();
+      }
+    }
+
+    function prevReviewQuestion() {
+      if (reviewIndex > 0) {
+        reviewIndex--;
+        loadReviewQuestion();
+      }
+    }
+
+    function startReview() {
+      reviewMode = true;
+      reviewIndex = 0;
+      document.getElementById('finalResult').style.display = 'none';
+      document.getElementById('quizContainer').style.display = 'block';
+      document.getElementById('clear-btn').style.display = 'none';
+      document.getElementById('next-btn').onclick = nextReviewQuestion;
+      document.getElementById('prev-btn').onclick = prevReviewQuestion;
+      loadReviewQuestion();
+    }
+
+    function endReview() {
+      reviewMode = false;
+      document.getElementById('next-btn').onclick = nextQuestion;
+      document.getElementById('prev-btn').onclick = prevQuestion;
+      document.getElementById('clear-btn').style.display = 'inline-block';
+      document.getElementById('quizContainer').style.display = 'none';
+      document.getElementById('finalResult').style.display = 'block';
+    }
+
+    // Functions for Reviewing Marked Questions.
+    let markedReviewIndex = 0;
+    function startMarkedReview() {
+      if (markedQuestions.length === 0) {
+        alert("You did not mark any questions!");
+        return;
+      }
+      markedReviewIndex = 0;
+      document.getElementById('finalResult').style.display = 'none';
+      document.getElementById('quizContainer').style.display = 'block';
+      document.getElementById('clear-btn').style.display = 'none';
+      document.getElementById('next-btn').onclick = nextMarkedReviewQuestion;
+      document.getElementById('prev-btn').onclick = prevMarkedReviewQuestion;
+      loadMarkedReviewQuestion();
+    }
+    function loadMarkedReviewQuestion() {
+      let qIndex = markedQuestions[markedReviewIndex];
+      const currentQuestion = quizQuestions[qIndex];
+      const state = questionStates[qIndex];
+      document.getElementById('questionNumber').textContent = `MARKED QUESTION ${markedReviewIndex + 1} of ${markedQuestions.length}`;
+      const phrasesContainer = document.getElementById('phrases');
+      phrasesContainer.innerHTML = '';
+      const correctOrder = currentQuestion.correctOrder.split('');
+      correctOrder.forEach(letter => {
+        const phraseDiv = document.createElement('div');
+        phraseDiv.className = 'phrase';
+        const letterSpan = document.createElement('span');
+        letterSpan.className = 'phrase-letter';
+        letterSpan.textContent = letter + '.';
+        const textSpan = document.createElement('span');
+        textSpan.className = 'phrase-text';
+        textSpan.textContent = ' ' + currentQuestion.phrases[letter];
+        phraseDiv.appendChild(letterSpan);
+        phraseDiv.appendChild(textSpan);
+        phrasesContainer.appendChild(phraseDiv);
+      });
+      const optionButtonsContainer = document.getElementById('option-buttons');
+      let reviewOptionsHTML = '';
+      const userAnswer = userAnswers[qIndex];
+      state.options.forEach(option => {
+          let style = '';
+          if(option === state.computedCorrectAnswer) {
+            style = 'border: 2px solid green; background-color: honeydew; margin: 5px;';
+          } else if(userAnswer && userAnswer !== state.computedCorrectAnswer && option === userAnswer) {
+            style = 'border: 2px solid red; background-color: mistyrose; margin: 5px;';
+          }
+          reviewOptionsHTML += `<button class="btn btn-outline-light option-btn" style="${style}">${option}</button>`;
+      });
+      if (!userAnswer) {
+         reviewOptionsHTML = `<p style="color: orange; font-weight: bold; margin: 5px;">You did not answer this question.</p>` + reviewOptionsHTML;
+      }
+      optionButtonsContainer.innerHTML = reviewOptionsHTML;
+      document.getElementById('prev-btn').disabled = (markedReviewIndex === 0);
+      const nextBtn = document.getElementById('next-btn');
+      nextBtn.textContent = (markedReviewIndex === markedQuestions.length - 1) ? 'Back to Results' : 'Next Marked Question';
+    }
+    function nextMarkedReviewQuestion() {
+      if (markedReviewIndex < markedQuestions.length - 1) {
+        markedReviewIndex++;
+        loadMarkedReviewQuestion();
+      } else {
+        endMarkedReview();
+      }
+    }
+    function prevMarkedReviewQuestion() {
+      if (markedReviewIndex > 0) {
+        markedReviewIndex--;
+        loadMarkedReviewQuestion();
+      }
+    }
+    function endMarkedReview() {
+      document.getElementById('quizContainer').style.display = 'none';
+      document.getElementById('finalResult').style.display = 'block';
+      document.getElementById('next-btn').onclick = nextQuestion;
+      document.getElementById('prev-btn').onclick = prevQuestion;
+      document.getElementById('clear-btn').style.display = 'inline-block';
+    }
+
+    // Mobile navbar hide on scroll (for mobile view)
+    let prevScrollPos = window.pageYOffset;
+    window.addEventListener('scroll', function() {
+      if (window.innerWidth <= 768) {
+        let currentScrollPos = window.pageYOffset;
+        if (prevScrollPos > currentScrollPos) {
+          document.getElementById("navbar").style.top = "0";
+        } else {
+          document.getElementById("navbar").style.top = "-70px";
+        }
+        prevScrollPos = currentScrollPos;
+      }
+    });
+
+    window.onload = startQuiz;
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
