@@ -475,6 +475,24 @@
     document.querySelector('.navbar-toggler').addEventListener('click', function() {
       document.querySelector('.navbar').classList.toggle('active');
     });
+
+    // Disable copy, paste, and cut events
+document.addEventListener('copy', (e) => {
+  e.preventDefault();
+});
+document.addEventListener('paste', (e) => {
+  e.preventDefault();
+});
+document.addEventListener('cut', (e) => {
+  e.preventDefault();
+});
+
+// Disable right-click context menu
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+});
+
   </script>
+
 </body>
 </html>
