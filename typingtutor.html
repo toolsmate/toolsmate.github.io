@@ -3,156 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Typing Tutor</title>
+  <title>Typing Tutor - toolsMATE</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Google Fonts: Quantico -->
-  <link href="https://fonts.googleapis.com/css2?family=Quantico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     /* Global Styles */
     * {
       box-sizing: border-box;
     }
     body {
-      font-family: 'Quantico', sans-serif;
-      margin: 0;
-      padding: 0;
       background: linear-gradient(135deg, #1c1c1c, #272727);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      color: #e0e0e0;
-    }
-    /* Header Navigation */
-    header {
-      width: 100%;
-      background: #1c1c1c;
-      padding: 10px 0;
-      position: relative;
-      z-index: 1000; /* Ensure header stays above overlay */
-    }
-    .main-nav .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .main-nav .nav-logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-    }
-    .main-nav .nav-logo img.logo-img {
-      height: 40px;
-      margin-right: 10px;
-    }
-    .main-nav .nav-links {
-      list-style: none;
-      display: flex;
+      font-family: "Open Sans", Arial, sans-serif;
+      font-weight: 300;
       margin: 0;
       padding: 0;
-    }
-    .main-nav .nav-links li {
-      margin-left: 25px;
-    }
-    .main-nav .nav-links li a {
-      text-decoration: none;
       color: #e0e0e0;
-      transition: color 0.3s;
-    }
-    .main-nav .nav-links li a:hover {
-      color: #007bff;
-    }
-    .main-nav .nav-toggle {
-      display: none;
+      display: flex;
       flex-direction: column;
-      cursor: pointer;
+      min-height: 100vh;
     }
-    .main-nav .nav-toggle span {
-      height: 3px;
-      width: 25px;
-      background: #fff;
-      margin: 4px 0;
-      transition: transform 0.4s ease, opacity 0.4s ease;
+    /* New Navigation Bar Styles (Copied from your provided code) */
+    .navbar {
+      background-color: #1e1e1e !important;
     }
-    /* Desktop: Show nav-links */
-    @media (min-width: 601px) {
-      .mobile-menu-overlay {
-        display: none;
-      }
+    .navbar a {
+      color: #e0e0e0 !important;
     }
-    /* Mobile View */
-    @media (max-width: 600px) {
-      /* Hide inline nav-links in header */
-      .main-nav .nav-links {
-        display: none;
-      }
-      .main-nav .nav-toggle {
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        border: 1px solid #fff; /* Rectangular box outline */
-        padding: 5px;
-        border-radius: 4px;
-      }
-      .main-nav .nav-toggle span {
-        height: 2px; /* Reduced thickness */
-        width: 25px;
-        background: #fff;
-        margin: 3px 0;
-        transition: transform 0.4s ease, opacity 0.4s ease;
-      }
-      .main-nav.active .nav-toggle span:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-      }
-      .main-nav.active .nav-toggle span:nth-child(2) {
-        opacity: 0;
-      }
-      .main-nav.active .nav-toggle span:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-      }
-      /* Mobile Menu Overlay (Dark Canvas) */
-      .mobile-menu-overlay {
-        display: block;
-        position: fixed;
-        top: 60px; /* Positioned just below the navbar */
-        left: 0;
-        right: 0;
-        background: #1c1c1c;
-        z-index: 999; /* Lower than header */
-        transform: translateY(-100%);
-        transition: transform 0.5s ease-out;
-      }
-      .mobile-menu-overlay.active {
-        transform: translateY(0);
-      }
-      .mobile-menu-overlay ul {
-        list-style: none;
-        margin: 0;
-        padding: 20px;
-        text-align: left; /* Menu items aligned to left */
-      }
-      .mobile-menu-overlay ul li {
-        margin: 15px 0;
-      }
-      .mobile-menu-overlay ul li a {
-        text-decoration: none;
-        color: #e0e0e0;
-        font-size: 1.2rem;
-      }
+    .navbar-brand-text {
+      color: #e0e0e0;
+      font-size: 24px;
+      font-weight: 700;
+      margin-left: 10px;
     }
-    /* Container/Card */
+    .navbar-toggler {
+      box-shadow: none;
+    }
+    .navbar-toggler:hover,
+    .navbar-toggler:focus {
+      background-color: transparent !important;
+      box-shadow: 0 0 0 2px #e0e0e0;
+    }
     .container {
       background: #2a2a2a;
       width: 90%;
-      max-width: 800px;
-      padding: 30px;
+      max-width: 1200px;
+      padding: 0px;
       border-radius: 12px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-      margin: 20px auto;
+      margin: 100px auto 20px; /* extra top margin for fixed nav bar */
       flex-grow: 1;
     }
     h1 {
@@ -164,19 +64,20 @@
     }
     /* Text Display Area */
     #text-display {
-      font-size: 1.1rem;
-      background: #3a3a3a;
-      padding: 20px;
+      font-size: 1rem;
+      font-family: "Open Sans", Arial, sans-serif;
+      background: #2a2a2a;
+      padding: 15px;
       border-radius: 8px;
       margin-bottom: 20px;
       line-height: 1.6;
-      color: #e0e0e0;
+      color: #ffffff;
       width: 100%;
-      max-width: 1000px; /* Increase max-width for larger screens */
-      margin: 0 auto 20px auto;
-      text-align: justify; /* Justify text for equal line lengths */
+      text-align: justify;
+      overflow-y: auto;
+      max-height: 250px;
     }
-    /* Timer Container with Heading on Single Line */
+    /* Timer Container */
     #timer-container {
       background: #444;
       padding: 10px;
@@ -197,18 +98,16 @@
       width: 100%;
       padding: 12px 15px;
       font-size: 1rem;
+      font-family: "Open Sans", Arial, sans-serif;
       border: 2px solid #555;
       border-radius: 8px;
       background: #333;
-      color: #e0e0e0;
+      color: #ffffff;
       transition: border-color 0.3s, box-shadow 0.3s;
       display: none;
       resize: vertical;
-    }
-    #text-input:focus {
-      outline: none;
-      border-color: #007bff;
-      box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+      overflow-y: auto;
+      max-height: 250px;
     }
     /* Timer */
     #timer {
@@ -236,7 +135,6 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
       color: #e0e0e0;
     }
-    /* Initially hide the stats until test is submitted */
     #stats {
       display: none;
     }
@@ -264,10 +162,10 @@
     }
     @media (max-width: 600px) {
       #text-display {
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
       #text-input {
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
       .stat-item {
         flex: 1 1 45%;
@@ -275,95 +173,75 @@
       }
     }
     /* Footer */
-    footer {
-      background: #1c1c1c;
+    .footer {
+      background-color: #1e1e1e;
+      font-family: 'Quantico', sans-serif;
+      color: white;
       padding: 20px 0;
       text-align: center;
-      color: #e0e0e0;
     }
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
+    /* Custom Scrollbar Styles */
+    #text-display::-webkit-scrollbar,
+    #text-input::-webkit-scrollbar {
+      width: 10px;
     }
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10px;
+    #text-display::-webkit-scrollbar-track,
+    #text-input::-webkit-scrollbar-track {
+      background: #444;
+      border-radius: 8px;
     }
-    .footer-logo img.footer-logo-img {
-      height: 40px;
-      margin-right: 10px;
+    #text-display::-webkit-scrollbar-thumb,
+    #text-input::-webkit-scrollbar-thumb {
+      background-color: #007bff;
+      border-radius: 8px;
+      border: 2px solid #444;
     }
-    .footer-links {
-      list-style: none;
-      padding: 0;
-      margin: 10px 0;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+    #text-display {
+      scrollbar-width: thin;
+      scrollbar-color: #007bff #444;
     }
-    .footer-links li {
-      margin: 0 15px;
+    #text-input {
+      scrollbar-width: thin;
+      scrollbar-color: #007bff #444;
     }
-    .footer-links li a {
-      text-decoration: none;
-      color: #e0e0e0;
-      transition: color 0.3s;
+    #text-display, 
+    #text-input {
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+      letter-spacing: 0.5px; /* adjust as needed */
+      line-height: 1.6;
     }
-    .footer-links li a:hover {
-      color: #007bff;
-    }
-    .footer-copy {
-      margin-top: 10px;
-      font-size: 0.9rem;
-    }
+
   </style>
 </head>
 <body>
-  <!-- Header Navigation -->
-  <header>
-    <nav class="main-nav">
-      <div class="nav-container">
-        <div class="nav-logo">
-          <a href="https://toolsmate.github.io/" class="nav-logo">
-          <!-- Replace 'logo.png' with your actual logo URL -->
-          <img src="weblogo.jpg" alt="" class="logo-img" />
-          toolsMATE
-        </div>
-        <ul class="nav-links">
-          <li><a href="https://toolsmate.github.io/">HOME</a></li>
-          <li><a href="https://toolsmate.github.io/privacy.html">PRIVACY</a></li>
-          <li><a href="https://toolsmate.github.io/aboutme.html">ABOUT ME</a></li>
-          <li><a href="https://toolsmate.github.io/contactme.html">CONTACT ME</a></li>
+  <!-- New Navigation Bar (Copied from your provided code) -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <!-- Hyperlink added to both logo and website name -->
+      <a class="navbar-brand" href="https://toolsmate.github.io">
+        <img src="weblogo.jpg" alt="" style="width: 40px; height: 40px;">
+        <span class="navbar-brand-text">toolsMATE</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="https://toolsmate.github.io">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="privacy.html">PRIVACY</a></li>
+          <li class="nav-item"><a class="nav-link" href="aboutme.html">ABOUT ME</a></li>
+          <li class="nav-item"><a class="nav-link" href="contactme.html">CONTACT ME</a></li>
         </ul>
-        <div class="nav-toggle">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
       </div>
-    </nav>
-  </header>
-  
-  <!-- Mobile Menu Overlay (Visible in Mobile Only) -->
-  <div class="mobile-menu-overlay">
-    <ul class="mobile-nav-links">
-      <li><a href="https://toolsmate.github.io/">HOME</a></li>
-      <li><a href="https://toolsmate.github.io/privacy.html">PRIVACY</a></li>
-      <li><a href="https://toolsmate.github.io/aboutme.html">ABOUT ME</a></li>
-      <li><a href="https://toolsmate.github.io/contactme.html">CONTACT ME</a></li>
-    </ul>
-  </div>
+    </div>
+  </nav>
 
-  <!-- Main Content Container -->
+  <!-- Typing Tutor Content Container (All else remains intact) -->
   <div class="container">
     <h1>TYPING TUTOR</h1>
-    <div id="text-display">
-      Education is the foundation of personal and societal growth. It equips individuals with the knowledge and skills necessary to navigate the world and achieve their goals. Access to quality education is essential for empowering people to make informed decisions, contribute to their communities, and succeed in their careers. With the advent of online learning platforms, education has become more accessible, enabling people worldwide to learn at their own pace and convenience.
-    </div>
-    <!-- Timer Container with Heading on a Single Line -->
+    <div id="text-display"></div>
     <div id="timer-container">
       <h3>TIME LEFT :</h3>
       <div id="timer">15:00</div>
@@ -385,15 +263,42 @@
       <button onclick="resetTypingTutor()">RESET</button>
     </div>
   </div>
-  
+
   <!-- Footer -->
-  <footer>
-      <p class="footer-copy">&copy; 2025 toolsMATE. All Rights Reserved.</p>
-    </div>
+  <footer class="footer">
+    <p>&copy; 2025 toolsMATE. All Rights Reserved.</p>
   </footer>
 
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    const textDisplay = document.getElementById('text-display').innerText.trim();
+    // Randomly display one of the paragraphs in #text-display.
+    const textDisplayElement = document.getElementById('text-display');
+    const paragraphs = [
+       "At any rate no reason can be given for supposing that the two orders are not the same. The same is usually true of space: if a regiment of men are marching along a road, the shape of the regiment will look different from different points of view, but the men will appear arranged in the same order from all points of view. Hence we regard the order as true also in physical space, whereas the shape is only supposed to correspond to the physical space so far as is required for the preservation of the order. In saying that the time-order which events seem to have is the same as the time-order which they really have, it is necessary to guard against a possible misunderstanding. It must not be supposed that the various states of different physical objects have the same time-order as the sense-data which constitute the perceptions of those objects. Considered as physical objects, the thunder and lightning are simultaneous; that is to say, the lightning is simultaneous with the disturbance of the air in the place where the disturbance begins, namely, where the lightning is. But the sense-datum which we call hearing the thunder does not take place until the disturbance of the air has travelled as far as to where we are. Similarly, it takes about eight minutes for the sun's light to reach us; thus, when we see the sun we are seeing the sun of eight minutes ago. So far as our sense-data afford evidence as to the physical sun they afford evidence as to the physical sun of eight minutes ago; if the physical sun had ceased to exist within the last eight minutes, that would make no difference to the sense-data which we call 'seeing the sun'. This affords a fresh illustration of the necessity of distinguishing between sense-data and physical objects. What we have found as regards space is much the same as what we find in relation to the correspondence of the sense-data with their physical counterparts. If one object looks blue and another red, we may reasonably presume that there is some corresponding difference between the physical objects; if two objects both look blue, we may presume a corresponding similarity. But we cannot hope to be acquainted directly with the quality in the physical object which makes it look blue or red. Science tells us that this quality is a certain sort of wave-motion, and this sounds familiar, because we think of wave-motions in the space we see. But the wave-motions must really be in physical space, with which we have no direct acquaintance; thus the real wave-motions have not that familiarity which we might have supposed them to have. And what holds for colours is closely similar to what holds for other sense-data. Thus we find that, although the relations of physical objects have all sorts of knowable properties, derived from their correspondence with the relations of sense-data, the physical objects themselves remain unknown in their intrinsic nature, so far at least as can be discovered by means of the senses. The question remains whether there is any other method of discovering the intrinsic nature of physical objects. The most natural, though not ultimately the most defensible, hypothesis to adopt in the first instance, at any rate as regards visual sense-data, would be that, though physical objects cannot, for the reasons we have been considering, be exactly like sense-data, yet they may be more or less like. According to this view, physical objects will, for example, really have colours, and we might, by good luck, see an object as of the colour it really is. The colour which an object seems to have at any given moment will in general be very similar, though not quite the same, from many different points of view; we might thus suppose the 'real' colour to be a sort of medium colour, intermediate between the various shades which appear from the different points of view. Such a theory is perhaps not capable of being definitely refuted, but it can be shown to be groundless. To begin with, it is plain that the colour we see depends only upon the nature of the light-waves that strike the eye, and is therefore modified by the medium intervening between us and the object, as well as by the manner in which light is reflected from the object in the direction of the eye.",
+       "In an era of unprecedented global change and rapid technological advancement, the challenges facing modern governments are multifaceted and complex. Policymakers must address issues ranging from economic inequality and unemployment to environmental degradation and the impact of digital transformation. Education, innovation, and sustainable development have become the cornerstones of national progress. A well-designed public policy that encourages entrepreneurship, research and development, and international collaboration can drive sustainable growth while ensuring that no segment of society is left behind. As technology reshapes the labor market, the need for lifelong learning and upskilling has never been more urgent, prompting governments to invest heavily in education and vocational training. At the same time, urbanization is accelerating at a rapid pace, with millions of people migrating to cities in search of better opportunities. This growth places immense pressure on urban infrastructure, public transportation, housing, and healthcare systems. To mitigate these challenges, innovative approaches in urban planning and public-private partnerships have emerged as key strategies. Modern cities are increasingly leveraging smart technology to optimize traffic flow, manage energy consumption, and improve public services, thereby transforming urban centers into efficient, sustainable, and livable environments. The global economy is more interconnected than ever, and international trade plays a pivotal role in shaping domestic prosperity. Free trade agreements, while offering new markets and opportunities, also expose industries to fierce competition and require adjustments in labor markets. Governments are challenged to balance the benefits of globalization with the need to protect local industries and ensure social safety nets for workers displaced by rapid technological changes. Investments in infrastructure, education, and digital innovation are essential to help economies transition smoothly and remain competitive on the world stage. Environmental sustainability has become a defining concern of our time. With the scientific consensus on climate change growing stronger, nations must adopt comprehensive policies to reduce greenhouse gas emissions and promote renewable energy sources. The transition from fossil fuels to cleaner alternatives, such as wind, solar, and hydroelectric power, is critical not only for the health of the planet but also for the long-term stability of economies. Environmental policies that incentivize green technology, energy efficiency, and sustainable practices are now central to global political and economic agendas, influencing decisions at every level of governance. Moreover, the rise of digital communication and social media has transformed the way citizens interact with their governments. Transparency, accountability, and public engagement have become key pillars of modern governance. As information becomes more accessible, governments are expected to be more responsive and inclusive in their decision-making processes. This shift towards participatory democracy has led to a rethinking of traditional policy frameworks, encouraging collaboration between public institutions, private enterprises, and civil society. The collective effort to build resilient communities and a more equitable future rests on a shared commitment to innovation, education, and sustainable development.Furthermore, the advent of artificial intelligence and automation has not only transformed industrial processes but also revolutionized daily life in profound ways. Smart devices and data-driven decision-making have reshaped sectors such as healthcare, education, and public administration. As digital integration accelerates, citizens are increasingly required to enhance their digital literacy to navigate complex systems, while policymakers face the challenge of creating robust regulatory frameworks that protect privacy and security without stifling innovation. Embracing a culture of continuous learning and ethical technology use is essential for harnessing these advancements in a manner that benefits society as a whole.",
+       "The prospect of cultivating sustainable agriculture in extraterrestrial environments has emerged as a critical area of research as humanity sets its sights on interstellar colonization. In recent years, scientific advancements in bioengineering, hydroponic cultivation, and controlled environment agriculture have paved the way for innovative solutions that may one day enable large-scale food production on space stations and planetary outposts. Researchers are exploring novel techniques that combine genetic engineering with precision agriculture, employing smart sensors, artificial intelligence, and robotics to optimize plant growth in microgravity and extreme environments. These cutting-edge methodologies aim to mitigate challenges such as limited water resources, reduced soil fertility, and the absence of natural sunlight, transforming barren extraterrestrial landscapes into thriving ecosystems capable of supporting human life. The integration of renewable energy sources and closed-loop recycling systems further enhances the viability of space-based agriculture, ensuring that resources are utilized efficiently and sustainably. As interdisciplinary collaborations between astrobiologists, agronomists, and aerospace engineers deepen, the development of resilient crop varieties and innovative cultivation systems is accelerating. These advancements not only promise to secure a steady supply of nutritious food for long-duration space missions but also offer transformative insights that could revolutionize agricultural practices on Earth. By harnessing the potential of interstellar agriculture, humanity may unlock new paradigms in sustainability and resource management, creating self-sufficient colonies that thrive in even the most inhospitable conditions. As space exploration enters a new era of ambition and innovation, the pursuit of extraterrestrial food production stands as a testament to human ingenuity and our enduring quest for survival beyond the confines of our home planet. Moreover, the challenges of cultivating crops in space inspire a reimagining of traditional farming techniques, incorporating advanced climate control, precision irrigation, and data-driven analysis to fine-tune every aspect of plant development. This holistic approach to space agriculture not only improves yield and efficiency but also lays the groundwork for a new form of ecological symbiosis between technology and nature. The quest for interstellar sustenance is, in essence, a microcosm of humanity’s broader aspiration to explore, adapt, and ultimately flourish in the cosmos, where every breakthrough in agricultural science brings us one step closer to realizing the dream of becoming a multi-planetary species. With ongoing investments in research and development, the future of space-based agriculture is poised to redefine our understanding of growth, resilience, and the limitless potential of life beyond Earth. In parallel, the challenges faced in these extraterrestrial agricultural systems have spurred innovations that are being translated back to terrestrial farming. Techniques such as vertical farming, precision irrigation, and climate-controlled greenhouses are being optimized for Earth, offering solutions to urban overcrowding and food security challenges. Governments and private enterprises are collaborating to build research facilities that simulate space-like conditions, enabling scientists to experiment with crop genetics and sustainable farming practices. These facilities serve as incubators for breakthrough technologies that promise to boost crop yields while minimizing environmental impact. As these advancements continue, the convergence of space technology and agricultural science will likely yield a new era of bio-innovation, where the lessons learned in zero gravity lead to more efficient, resilient, and sustainable farming methods on Earth. This integrated approach not only fosters technological progress but also creates new economic opportunities, paving the way for an era of agricultural renaissance that benefits both spacefarers and terrestrial societies alike. Ultimately, the drive to develop robust, space-adapted agricultural systems underscores the human spirit of exploration and the relentless pursuit of a future where knowledge, technology, and nature converge to create a better world for all.",
+       "In the digital age, the advent of global communication networks has fundamentally reshaped cultural identity and social interaction. With the rise of social media platforms, instant messaging, and video conferencing, people across continents are now connected in real time, allowing for the rapid exchange of ideas, traditions, and values. This unprecedented connectivity has led to a cultural melting pot where local customs blend with global trends, creating new forms of artistic expression, humor, and even language. Memes, viral videos, and digital art have emerged as powerful symbols of collective experience, transcending borders and inspiring movements that challenge established norms. As digital channels make it easier for individuals to access diverse cultural content, traditional boundaries between regional and global identities blur, fostering a sense of shared humanity even as local uniqueness persists. At the same time, this rapid cultural convergence brings its own challenges. Concerns over the homogenization of culture, the potential loss of indigenous traditions, and issues of cultural appropriation have surfaced as societies grapple with the implications of instant, worldwide connectivity. Policymakers, educators, and community leaders are increasingly tasked with balancing the benefits of global communication against the need to preserve cultural diversity and heritage. Moreover, the influence of digital media extends far beyond entertainment and social networking; it plays a crucial role in shaping public discourse, influencing political opinions, and mobilizing grassroots initiatives. As the digital landscape continues to evolve, the ways in which communities negotiate identity, belonging, and creative expression will undoubtedly transform, prompting ongoing debate about the future of cultural integrity in a hyper-connected world. In this dynamic environment, the interplay between technology and culture serves not only as a catalyst for social change but also as a mirror reflecting the evolving values and aspirations of contemporary society. Ultimately, the digital revolution presents both opportunities and challenges—a chance to create a more inclusive, interconnected global community while also demanding careful stewardship of the rich tapestry of human culture. In the digital age, the advent of global communication networks has fundamentally reshaped cultural identity and social interaction. With the rise of social media platforms, instant messaging, and video conferencing, people across continents are now connected in real time, allowing for the rapid exchange of ideas, traditions, and values. This unprecedented connectivity has led to a cultural melting pot where local customs blend with global trends, creating new forms of artistic expression, humor, and even language. Memes, viral videos, and digital art have emerged as powerful symbols of collective experience, transcending borders and inspiring movements that challenge established norms. As digital channels make it easier for individuals to access diverse cultural content, traditional boundaries between regional and global identities blur, fostering a sense of shared humanity even as local uniqueness persists. At the same time, this rapid cultural convergence brings its own challenges. Concerns over the homogenization of culture, the potential loss of indigenous traditions, and issues of cultural appropriation have surfaced as societies grapple with the implications of instant, worldwide connectivity. Policymakers, educators, and community leaders are increasingly tasked with balancing the benefits of global communication against the need to preserve cultural diversity and heritage. Moreover, the influence of digital media extends far beyond entertainment and social networking; it plays a crucial role in shaping public discourse, influencing political opinions, and mobilizing grassroots initiatives. As the digital landscape continues to evolve, the ways in which communities negotiate identity, belonging, and creative expression will undoubtedly transform, prompting ongoing debate about the future of cultural integrity in a hyper-connected world. In this dynamic environment, the interplay between technology and culture serves not only as a catalyst for social change but also as a mirror reflecting the evolving values and aspirations of contemporary society. Ultimately, the digital revolution presents both opportunities and challenges—a chance to create a more inclusive, interconnected global community while also demanding careful stewardship of the rich tapestry of human culture. Moreover, the pervasive reach of digital technology has instigated a paradigm shift in how narratives are constructed and disseminated, turning every user into both a consumer and a creator of content.",
+       "Culinary innovation, a fascinating fusion of art and science, has revolutionized the way societies perceive, create, and enjoy food. In recent decades, visionary chefs, food scientists, and entrepreneurs have pushed the boundaries of traditional cooking methods by embracing techniques from molecular gastronomy, precision cooking, and sustainable ingredient sourcing. Modern kitchens have transformed into laboratories where experimentation meets time-honored traditions, enabling innovators to deconstruct classic dishes and reassemble them into surprising new forms that captivate both the palate and the eye. For instance, the use of liquid nitrogen to flash-freeze ingredients, the creation of delicate foams and emulsions, and the artful presentation of dishes through modern plating techniques have redefined what is possible in the culinary world. Moreover, the global exchange of ideas facilitated by digital platforms has led to a dynamic cultural melting pot where diverse culinary traditions converge. Chefs are now blending Eastern spices with Western cooking techniques, infusing Mediterranean flavors with South American ingredients, and even drawing inspiration from indigenous practices to create dishes that are as innovative as they are deeply rooted in cultural heritage. This vibrant cross-pollination of ideas not only enhances the dining experience but also challenges diners to appreciate the complexity and nuance of each ingredient. Furthermore, the increasing emphasis on health and sustainability has spurred the development of plant-based alternatives and environmentally responsible practices that reduce waste and lower carbon footprints. Digital media, social networks, and online cooking tutorials have democratized culinary knowledge, empowering aspiring cooks and professional chefs alike to experiment with new recipes and share their creations with a global audience. Many culinary schools now incorporate advanced food science and technology into their curricula, equipping the next generation of chefs with the tools to innovate and adapt in a rapidly changing world. Government initiatives and private investments in agricultural research further support this revolution by promoting sustainable farming techniques and the development of new, high-yield crop varieties that can better meet the demands of modern gastronomy. As our understanding of nutrition deepens, the convergence of culinary artistry and scientific inquiry continues to give rise to personalized diets and wellness-focused food trends that reflect the evolving priorities of contemporary society. In essence, culinary innovation stands as a testament to human creativity and resilience, offering not only exquisite dining experiences but also practical solutions to some of the most pressing challenges of our time. The ongoing evolution in the culinary arts promises to inspire, educate, and transform our relationship with food, turning every meal into an opportunity for exploration, cultural exchange, and the celebration of life’s abundant possibilities. Furthermore, the evolution of culinary arts in the 21st century is not just a testament to the dynamic interplay between tradition and modernity but also reflects the growing global awareness regarding food security, environmental sustainability, and health consciousness. As chefs and food technologists explore innovative techniques to optimize flavor, texture, and nutritional content, state-of-the-art methods such as sous-vide, cryogenic freezing, and fermentation are being integrated with traditional practices to create dishes that are both inventive and deeply respectful of heritage. The renewed focus on locally sourced, seasonal, and organic ingredients has spurred a farm-to-table movement that celebrates freshness and ecological responsibility, uniting urban farmers, artisanal producers, and gourmet chefs in a collective quest for culinary excellence. Digital platforms have further transformed this landscape by offering virtual dining experiences, augmented reality menus, and interactive culinary workshops that educate and entertain simultaneously. Moreover, the culinary industry is embracing the challenge of preserving traditional recipes while adapting them for modern tastes and dietary requirements, as research into ancient grains, superfoods, and herbal infusions reveals new nutritional benefits.",
+       "Renewable energy is emerging as one of the most critical sectors in the global effort to address climate change and ensure sustainable development for future generations. The transition from fossil fuels to renewable sources such as solar, wind, geothermal, and hydropower is not merely a technological shift, but a comprehensive transformation of the economic, social, and political frameworks that underpin modern societies. As governments and private enterprises invest heavily in research and infrastructure, renewable energy technologies have advanced rapidly, achieving significant improvements in efficiency, cost-effectiveness, and reliability. Solar panels and wind turbines now generate electricity at scales that were unimaginable just a decade ago, while innovations in energy storage—such as advanced batteries, flow batteries, and even hydrogen-based systems—address intermittency issues once considered insurmountable. Moreover, the decentralized nature of renewable energy systems empowers communities to take control of their own energy production, reducing dependence on large-scale utilities and fostering local resilience. In addition, many countries are investing in research programs to develop next-generation renewable technologies that combine multiple energy sources into hybrid systems that are more efficient and reliable than conventional methods. Academic institutions and industrial leaders have established numerous pilot projects in remote areas to test the viability of these renewable systems under extreme conditions, while international cooperation facilitates the sharing of best practices and innovative financing models. Advances in materials science have significantly improved the efficiency of photovoltaic cells, enabling them to convert sunlight into electricity more effectively while simultaneously reducing production costs. In parallel, wind turbine designs have become increasingly sophisticated, incorporating aerodynamic improvements and advanced control systems that maximize energy capture even in low-wind conditions. The integration of smart grid technologies—which include advanced metering infrastructure, automated distribution systems, and real-time monitoring—has revolutionized how electricity is managed and distributed, ensuring that energy supply can meet fluctuating demand on a grid-wide scale. As renewable energy infrastructure expands, the role of government policy grows ever more important; lawmakers are enacting legislation, providing subsidies, and investing in workforce training programs to support the sector’s rapid growth. Environmental impact assessments and sustainability audits are now integral to the planning and implementation of renewable projects, ensuring that new installations benefit both local communities and the global environment. Public awareness campaigns and educational initiatives further promote energy efficiency and responsible consumption, empowering citizens to reduce their carbon footprints and contribute to a healthier planet. In summary, the evolution of renewable energy represents a paradigm shift in how humanity approaches power generation and environmental stewardship. Through technological innovation, international collaboration, and robust policy frameworks, the renewable sector is poised to deliver significant environmental benefits as well as substantial economic opportunities. The ongoing transition to a sustainable energy future is a complex journey marked by continuous advancements, strategic partnerships, and a shared commitment to preserving our natural resources. This multifaceted approach is essential for addressing the urgent challenges of climate change and ensuring a resilient, prosperous global community in the years to come. Furthermore, continued innovation in renewable energy is stimulating a global market that drives investments in advanced research, fosters local industry growth, and paves the way for energy independence. Emerging technologies such as artificial intelligence for dynamic energy management, predictive maintenance for wind farms, and breakthroughs in battery chemistry are reshaping the energy landscape in unprecedented ways. These advancements not only lower costs but also contribute to building a more resilient and decentralized power grid that empowers communities to harness renewable resources more efficiently.",
+       "The evolution of transportation has been a cornerstone in the development of human civilization, transforming societies from isolated communities into a globally interconnected network. In ancient times, people traveled primarily on foot or used domesticated animals such as horses, donkeys, and camels to move goods and themselves across short distances. The invention of the wheel, one of humanity’s most significant breakthroughs, set the stage for the development of chariots, carts, and later more sophisticated vehicles that could traverse increasingly longer and rougher terrains. As civilizations flourished, complex road networks were constructed by empires like the Romans, whose durable highways not only facilitated trade and military movement but also fostered cultural exchange across vast territories. The medieval era saw further innovation with the development of waterborne transportation—ships and boats that enabled cross-continental trade and exploration, expanding the horizons of what was thought possible. With the onset of the Industrial Revolution, transportation underwent a dramatic transformation; steam-powered locomotives and ships replaced slower, manual methods, shrinking distances and propelling economic growth on an unprecedented scale. Cities expanded rapidly as railroads connected remote regions, spurring urbanization and redefining commerce and communication. The invention of the automobile in the late 19th and early 20th centuries ushered in another era of rapid change. Mass production techniques, epitomized by assembly lines, made cars affordable for a broad segment of the population, and the subsequent construction of extensive highway networks revolutionized personal mobility. This period also saw the birth of air travel, which transformed long-distance transportation by reducing travel times from days or weeks to mere hours. Today, the transportation sector is on the brink of another revolution with the emergence of electric vehicles, autonomous driving technologies, and innovative high-speed transit systems such as hyperloop concepts. Environmental concerns and the need for sustainable solutions are driving governments and industries to invest heavily in renewable energy-powered transport and smart infrastructure. Modern technologies such as real-time traffic management, ride-sharing platforms, and integrated public transit systems are redefining urban mobility, making transportation more efficient, safer, and less polluting. Moreover, advances in materials science and engineering continue to push the boundaries of vehicle design, from lightweight composites that improve fuel efficiency to cutting-edge battery technologies that extend driving ranges and reduce charging times. As cities grow and populations increase, the challenge of maintaining a balance between efficient transportation and environmental sustainability becomes ever more critical. Policymakers are tasked with creating regulatory frameworks that not only encourage innovation but also protect public health and ensure equitable access to transportation services. The social impact of these developments is profound: improved transportation infrastructure enhances economic opportunities, reduces travel time, and connects people in ways that were once unimaginable. It also spurs regional development by linking rural areas to urban centers, thereby reducing economic disparities and promoting social inclusion. As we look to the future, the convergence of digital technology, renewable energy, and advanced engineering promises to usher in an era of transportation that is not only faster and more efficient but also greener and more responsive to the needs of a global population, fundamentally reshaping urban landscapes and redefining social interactions. Moreover, as innovation continues unabated, emerging trends in autonomous and electric transportation are reshaping not only how people travel but also the structure of entire urban ecosystems. The integration of real-time data analytics, predictive maintenance, and intelligent transportation systems is driving a paradigm shift that promises greater efficiency, safety, and sustainability. These advancements are poised to create transformative ripple effects across all sectors, making transportation a central pillar of future economic and social development.",
+       "Quantum computing is widely recognized as one of the most transformative technologies of our era, promising to revolutionize problem-solving and reshape entire industries. Unlike classical computing, which relies on bits that exist as either 0 or 1, quantum computing harnesses the power of qubits, which can exist in multiple states simultaneously. This phenomenon, known as superposition, along with the principle of entanglement—where the state of one qubit can depend on the state of another even at great distances—allows quantum computers to perform complex calculations at speeds unattainable by conventional machines. As governments, tech giants, and academic institutions invest billions into developing scalable quantum systems, the race is on to build a fault-tolerant quantum computer that can break through current technological barriers. The implications are enormous: in cryptography, quantum algorithms threaten to upend existing encryption methods, necessitating the development of quantum-resistant security protocols; in optimization and logistics, quantum models could streamline supply chains and resource distribution in ways that dramatically reduce cost and time; and in medicine, quantum simulations hold the promise of accelerating drug discovery and tailoring treatments to individual genetic profiles. Yet, with these vast potentials come equally significant challenges. Qubit coherence, error correction, and the integration of quantum processors with existing classical infrastructures remain substantial technical hurdles. Beyond the laboratory, the ethical and societal ramifications of quantum technology are already a subject of intense debate. As quantum computing becomes more practical, questions about data privacy, the control of powerful computational tools, and the digital divide between nations with and without quantum capabilities will intensify. Policymakers must now consider not only how to foster innovation but also how to safeguard against potential misuse, ensuring that the benefits of quantum breakthroughs are equitably shared. Furthermore, the rapid pace of development in quantum research is prompting a rethinking of education and workforce development; a new generation of scientists, engineers, and data analysts must be trained in quantum theory and practical applications to harness this disruptive technology effectively. Public engagement is also critical, as widespread understanding of quantum principles will be necessary to inform policy and ethical guidelines in the future. As quantum computing continues to advance, it is poised to trigger a paradigm shift across multiple domains—from finance and cybersecurity to healthcare and artificial intelligence—ushering in a new era of innovation that challenges our fundamental notions of computation and reality. Interdisciplinary collaboration, international cooperation, and robust regulatory frameworks will be essential to navigate the complex landscape that lies ahead. In this unfolding revolution, every breakthrough not only pushes the boundaries of what is technologically possible but also forces society to reconsider how knowledge is acquired, how power is distributed, and how we ultimately define progress. The journey toward a fully functional quantum era is as much about overcoming scientific obstacles as it is about cultivating an informed, ethical approach to a future where the lines between possibility and impossibility blur. As research accelerates and quantum devices inch closer to real-world applications, the impact on global economies, security structures, and everyday life will be profound, setting the stage for a transformative shift in how humanity approaches both computation and the broader challenges of the modern world. Looking forward, the integration of quantum computing with emerging technologies such as blockchain, neural networks, and the Internet of Things is expected to accelerate innovation even further. As quantum algorithms evolve, they promise new methods for optimizing complex systems, simulating intricate chemical reactions, and reimagining financial models. This synergy is poised to disrupt traditional industries while creating entirely new markets. ",
+       "Digital art and the rise of non-fungible tokens (NFTs) represent a seismic shift in the creative landscape, redefining how art is produced, owned, and experienced. Emerging at the intersection of blockchain technology and artistic innovation, NFTs have disrupted centuries-old traditions of art authentication and provenance. Artists now have the unprecedented ability to establish verifiable scarcity for their digital works, bypass traditional galleries and auction houses, and connect directly with a global audience. This new paradigm has democratized art markets, allowing creators from diverse backgrounds to showcase their talents without the gatekeeping of established institutions. As digital art evolves from a niche interest to a mainstream phenomenon, the market has seen explosive growth, spurring debates on the intrinsic value of art, intellectual property rights, and the environmental impact of blockchain operations. Critics warn of a speculative bubble fueled by hype and volatility, while advocates see NFTs as empowering tools that not only preserve creative integrity but also enable innovative revenue models for artists. The decentralized nature of blockchain ensures that every token is unique, yet it also raises complex questions about copyright enforcement and long-term digital preservation. In response, researchers and industry leaders are exploring eco-friendly blockchain solutions and more energy-efficient consensus algorithms to mitigate environmental concerns. Beyond the economics, the cultural implications of this digital revolution are profound. As traditional definitions of art are challenged by new forms of expression—interactive installations, augmented reality experiences, and generative art—the boundaries between creator and audience blur, fostering collaborative communities that redefine what it means to be an artist in the modern era. Virtual galleries and online marketplaces have transformed art collecting into a borderless, dynamic experience, where digital ownership and provenance are secured on immutable ledgers. This transformation is prompting established institutions to rethink their roles and adapt to a rapidly shifting creative ecosystem. Moreover, the convergence of digital art with social media has enabled viral trends and global movements, amplifying voices that were once marginalized and inspiring cross-cultural exchanges that transcend geographical limitations. As the digital art market matures, stakeholders—ranging from individual collectors and artists to large corporations and governments—are grappling with regulatory frameworks and ethical considerations that will shape the future of creativity. In this evolving landscape, the interplay between technology, culture, and commerce is setting the stage for a new era of artistic expression, one where innovation is celebrated and creativity is reimagineLooking forward, as immersive digital experiences gain prominence through virtual reality galleries, augmented reality exhibitions, and interactive online platforms, the way art is created and consumed is undergoing an even more dramatic transformation. The confluence of cutting-edge technology and artistic vision has given rise to works that challenge traditional media and redefine aesthetic boundaries. Innovative creators are now experimenting with algorithm-generated art, dynamic installations that change in real time based on audience interaction, and hybrid formats that merge video, sound, and digital sculpture. These advancements compel collectors and critics to rethink the criteria for authenticity and originality in a digital age, prompting new legal and ethical debates about ownership and creative rights. As digital art evolves, platforms are emerging that not only facilitate transactions but also offer immersive viewing experiences, allowing enthusiasts to explore art in virtual spaces that mimic physical galleries. This shift is also stimulating a global dialogue about the value of art in an era where the intangible meets the technical, and where every digital file carries with it a legacy of innovation and cultural expression. Efforts to standardize metadata, secure blockchain protocols, and enforce digital copyrights are advancing in tandem with these creative endeavors.",   
+       "Swami Vivekananda Ji, born Narendranath Datta, remains one of the most revered and transformative spiritual leaders in modern history. His life and teachings continue to inspire millions not only in India but around the globe. From his early years in Calcutta, where he displayed an insatiable thirst for knowledge and a deep sensitivity to the spiritual heritage of his homeland, Vivekananda embarked on a journey that would forever change the landscape of Indian thought. Influenced profoundly by his mentor, Sri Ramakrishna Paramahamsa, he embraced the ancient wisdom of Vedanta and propagated the message that all religions share a common truth. His stirring address at the Parliament of the World's Religions in Chicago in 1893 remains legendary, as his words resonated with audiences worldwide and heralded a new era of interfaith understanding and universal brotherhood. In his lectures and writings, he emphasized that each human being carries within them the divine spark, urging individuals to look beyond superficial differences and work together for the greater good. Swami Vivekananda’s teachings were not confined to abstract spirituality; he also championed social reform, education, and self-reliance, inspiring a nation under colonial rule to reclaim its cultural identity and strive for independence. His dynamic vision encouraged people to harness their inner strength, pursue self-improvement, and contribute actively to society through service and compassion. Over time, his message has evolved into a universal call for peace, unity, and the realization of one’s true potential, transcending time and cultural boundaries. Today, his legacy is celebrated through countless institutions, cultural programs, and educational initiatives that aim to keep alive the spirit of inquiry, compassion, and resilience he so passionately espoused. His life story—a remarkable blend of intellect, courage, and humility—challenges us to question our limitations, embrace diversity, and work collectively toward a future where spiritual wisdom and practical progress go hand in hand. In a rapidly changing world rife with conflict and uncertainty, his call for a balanced, inclusive approach to life remains as pertinent as ever. Through his profound insights, Vivekananda continues to light the path for those seeking truth, urging us to rise above the mundane and realize the eternal potential that lies within. His teachings serve as a reminder that true strength is found not in material wealth but in the cultivation of inner virtue and the dedication to the service of humanity. As modern society grapples with issues of identity, equity, and global interconnectedness, the timeless wisdom of Swami Vivekananda offers a beacon of hope—a call to live with purpose, to nurture the divine spark within each individual, and to work together to create a more compassionate and enlightened world. The enduring relevance of his philosophy can be seen in the way it continues to influence educational reforms, inspire social movements, and foster dialogue among diverse communities. His life remains a powerful testament to the transformative power of self-belief and the pursuit of higher ideals, urging each generation to explore the depths of human potential and to contribute meaningfully to the collective well-being of society. Furthermore, his enduring influence is evident in the myriad of cultural institutions, educational reforms, and social movements that continue to bear his mark. Leaders and scholars alike draw inspiration from his insistence on self-improvement and his vision of a society where spiritual wisdom coexists with material progress. His teachings resonate in the vibrant discourse of modern philosophy and social activism, offering a timeless framework for personal and collective transformation. As the world becomes more complex and interconnected, the message of compassion, unity, and self-realization that Swami Vivekananda advocated remains a guiding light for those seeking to overcome adversity and build a more equitable society. His life and work continue to inspire countless individuals to pursue excellence, embrace diversity, and strive for a harmonious existence, proving that the legacy of true wisdom is indeed eternal and ever-evolving.",
+       "Bhagat Singh Ji, born in 1907 in a time of intense political ferment in Punjab, emerged as a fearless revolutionary whose passion for freedom and justice ignited the hearts of millions. From a young age, he was deeply moved by the stories of martyrdom and sacrifice that permeated his family and community, which instilled in him a burning desire to challenge the oppressive colonial regime. As he matured, Bhagat Singh became involved with radical groups and adopted a philosophy that combined fierce patriotism with a commitment to social equality and human dignity. His daring acts—ranging from his involvement in the Lahore Conspiracy Case to the symbolic bombing of the Central Legislative Assembly—were not acts of wanton violence but carefully calculated measures designed to awaken the national consciousness and undermine British authority. In court, his articulate defense and fearless critique of imperialism resonated with audiences, transforming him into an icon of resistance whose words echoed far beyond the confines of the courtroom. Bhagat Singh’s life was a blend of intellectual rigor and physical courage; he was not only a revolutionary but also a profound thinker who embraced the ideas of socialism, secularism, and rational inquiry. His writings and speeches continue to inspire debates on justice, freedom, and the role of the state, urging generations to question authority and to champion the cause of the oppressed. Even as he faced the grim reality of a death sentence at a very young age, his calm dignity and unwavering resolve turned his martyrdom into a powerful symbol of ultimate sacrifice for the nation’s future. Statues, memorials, and academic treatises bear testament to his enduring legacy, while his life story serves as a constant reminder that the struggle for freedom requires not only bravery but also a deep sense of moral purpose. Moreover, his revolutionary ideals transcended the political realm to encompass social and cultural dimensions; he believed that true liberation would come only when all citizens, regardless of caste, creed, or economic status, enjoyed equal rights and opportunities. His message was clear: the fight against tyranny was not limited to armed rebellion but also included the battle against social injustice and inequality. In the decades following his sacrifice, Bhagat Singh’s legacy has been reinterpreted and celebrated in various forms—through literature, art, and cinema—ensuring that his ideas remain alive in the public imagination. His life remains a powerful testament to the transformative power of self-belief and the pursuit of higher ideals, urging each generation to explore the depths of human potential and to contribute meaningfully to the collective well-being of society. Furthermore, his enduring influence is evident in the myriad of cultural institutions, educational reforms, and social movements that continue to bear his mark. Leaders and scholars alike draw inspiration from his insistence on self-improvement and his vision of a society where spiritual wisdom coexists with material progress. His writings and speeches, preserved in archives and retold in various forms of media, continue to challenge contemporary leaders to address inequality and injustice with the same unwavering courage. Modern India commemorates his sacrifice through national observances, academic research, and public discourse, reinforcing his status as a symbol of resistance and an icon of patriotic fervor. In classrooms and public forums, his legacy is analyzed not only as a historical narrative but also as an enduring call to action against modern forms of oppression. Youth organizations and social activists often invoke his memory as they mobilize for causes ranging from civil rights to economic justice, reflecting a dynamic reinterpretation of his revolutionary spirit for a new era. The vibrant debate surrounding his ideals underscores the timeless relevance of his sacrifice, as his example continues to inspire collective efforts to build a more just and equitable society. His legacy, immortalized through art, literature, and public memorials, remains a rallying point for those who aspire to overcome adversity through courage, sacrifice, and unwavering commitment to a higher ideal.",
+       "Indian culture is a vibrant mosaic of traditions, languages, and philosophies that spans millennia, offering a rich tapestry woven from countless influences and experiences. From the ancient civilizations of the Indus Valley to the modern, dynamic republic that India is today, its culture is defined by an enduring ability to absorb, adapt, and transform diverse elements while maintaining a unique identity. Home to an array of religions such as Hinduism, Buddhism, Jainism, Sikhism, Islam, and Christianity, India celebrates a multiplicity of spiritual paths, each contributing rituals, art forms, and philosophical insights that have shaped the nation's collective consciousness. This spiritual diversity is evident in the many temples, mosques, churches, and gurudwaras that stand as testaments to centuries of devotion and aesthetic brilliance. Indian classical music and dance—exemplified by the intricate rhythms of Hindustani and Carnatic music, and the expressive movements of Bharatanatyam, Kathak, Odissi, and other dance forms—reveal a deep commitment to storytelling, emotion, and technical mastery. The literary heritage, ranging from epic narratives such as the Mahabharata and Ramayana to modern works, offers profound reflections on human nature, morality, and the eternal quest for truth. Art in India, whether displayed in the delicate brushstrokes of miniature paintings or the bold expressions of contemporary installations, mirrors the complex interplay between tradition and modernity. Culinary traditions, too, are a celebration of diversity—with regional cuisines characterized by a symphony of spices, flavors, and cooking techniques that have evolved over centuries and continue to captivate food lovers worldwide. Festivals such as Diwali, Holi, Eid, Navratri, Pongal, and countless local celebrations infuse everyday life with color, music, and a sense of communal belonging, reinforcing bonds that transcend differences. Central to Indian culture is a profound respect for family, elders, and education, which serves as the bedrock for personal and social progress. Even as India strides confidently into the modern era with rapid technological advancements and urban development, it remains deeply rooted in its ancient traditions and values, creating a unique synthesis where innovation coexists with timeless practices. This blend of old and new is evident in the revival of traditional crafts, languages, and performing arts, alongside the adoption of cutting-edge digital media and technology, ensuring that the cultural heritage remains vibrant and relevant. The resilience of Indian culture lies in its pluralism and adaptability, allowing it to continually redefine itself while offering timeless lessons in tolerance, unity, and the celebration of diversity. As the world grows more interconnected, the inclusive ethos of Indian culture—its emphasis on harmonious coexistence, respect for individual expression, and commitment to collective well-being—serves as a guiding light for global citizenship. Initiatives in education, sustainable development, and social reform draw inspiration from this rich legacy, reinforcing the idea that progress is best achieved when cultural heritage and modernity are in dialogue. The enduring appeal of Indian culture, with its multifaceted traditions and boundless creativity, continues to inspire art, literature, and philosophy around the globe, ensuring that its legacy of resilience, innovation, and profound spirituality is passed on to future generations in ever-evolving forms. In continuing the legacy of this ancient yet dynamic civilization, the spirit of innovation and tradition merges to form a living mosaic of practices that evolve with each generation. The timeless values of respect, empathy, and communal harmony, passed down through countless stories and rituals, serve not only as cultural touchstones but as guiding principles in modern life. Urban centers and rural communities alike celebrate this enduring heritage through festivals, art, and culinary traditions that encapsulate the essence of India’s rich diversity. As global interactions intensify, the influence of Indian culture expands further, inspiring creative collaborations and progressive social reforms that honor the past while embracing the future. This seamless synthesis of tradition with modernity fosters an environment where ancient wisdom and contemporary thought coalesce, driving a vibrant dialogue that shapes both personal identities and collective aspirations. Across the subcontinent, from the bustling metropolises to the serene villages, every cultural expression—be it a classical performance, a folk ritual, or a modern art installation—reflects the deep-rooted philosophy that unity in diversity is the strength of the nation.",
+       "Indian cricket is more than just a sport. It is a pulsating rhythm that beats in the heart of a nation, a force that unites millions across diverse cultures, languages, and regions. The story of Indian cricket began in the early decades of the 20th century, evolving from modest beginnings into a phenomenon that now captivates the world. From the historic triumphs of the 1983 World Cup, which instilled newfound pride and self-belief in a nation under colonial rule, to the electrifying atmosphere of modern-day IPL matches that blend high-octane entertainment with raw competitive spirit, cricket in India is a narrative of passion, resilience, and transformation. Legendary figures such as Lala Amarnath, Sunil Gavaskar, Kapil Dev, and later icons like Sachin Tendulkar, Rahul Dravid, and Anil Kumble laid the foundation of a sporting culture that cherishes excellence and celebrates every boundary and wicket. Their exploits on the field became myths, inspiring generations of young aspirants to dream big and aim high. As the game evolved, the emergence of innovative captains and modern training techniques further propelled the sport to new heights. The meteoric rise of players like MS Dhoni and Virat Kohli, whose leadership and technical brilliance redefined modern cricketing standards, has added new chapters to this ever-expanding saga. Every match is a spectacle—a blend of strategic acumen, athletic grace, and an unyielding will to win, which in turn fuels the fervor of millions of fans who follow the game with almost religious devotion. Packed stadiums, pulsating with the chants of ardent supporters, and television broadcasts that capture every thrilling moment, have transformed cricket into a unifying force that transcends economic, regional, and social boundaries. The nation’s love for cricket is evident not only in the triumphs on the international stage but also in the grassroots tournaments played on dusty village grounds and urban parks alike. Cricket academies, passionate local clubs, and fervent school competitions all contribute to a vibrant ecosystem where talent is nurtured and dreams are forged. Moreover, the commercial revolution triggered by the Indian Premier League (IPL) has elevated the game to unprecedented global prominence, drawing international stars and fostering a new era of franchise cricket that marries sports with entertainment and business. With advanced technologies, data analytics, and modern coaching methodologies, the game continues to evolve, ensuring that the strategies and skills of tomorrow are being honed today. The impact of Indian cricket is far-reaching—it has influenced art, literature, and even politics, with cricketing heroes often becoming symbols of national identity and pride. As debates rage over tactics, team selections, and match strategies, every run scored and wicket taken becomes part of a larger dialogue about perseverance, teamwork, and the spirit of competition. The enduring legacy of Indian cricket is also reflected in its ability to inspire social change, galvanize communities during times of national crisis, and foster a sense of belonging among millions. In boardrooms and living rooms alike, cricket is more than just a game—it is a mirror that reflects the hopes, struggles, and dreams of a nation in constant pursuit of excellence. As technology transforms viewing experiences and international rivalries intensify, the passion for cricket remains an unchanging constant—a testament to the enduring power of sport to unite, inspire, and uplift. Continuing this legacy, the game is not only a showcase of extraordinary athletic talent but also a celebration of India’s cultural diversity and its relentless spirit. The trials and triumphs on the cricket field echo the larger story of a nation that has emerged resilient and innovative, turning every setback into an opportunity and every victory into a reason to dream bigger. The narrative of Indian cricket, rich with history and replete with emotion, continues to evolve with each generation, ensuring that the passion for the game remains as vibrant today as it was in the early days of the sport.",
+       "The Indian Space Research Organisation (ISRO) is a beacon of scientific achievement, embodying the spirit of innovation and the relentless pursuit of knowledge that has propelled India to the forefront of global space exploration. Established in 1969 with humble beginnings and a vision to harness space technology for national development, ISRO has grown into one of the world’s most cost-effective and reliable space agencies. Over the decades, ISRO has launched a wide array of satellites for communication, weather forecasting, navigation, and Earth observation, thereby bridging the technological divide between rural and urban India and contributing significantly to socio-economic development. The agency’s remarkable achievements include landmark missions such as the Mars Orbiter Mission (Mangalyaan), which made history as the first successful interplanetary mission achieved on a modest budget, and the Chandrayaan missions, which have dramatically advanced our understanding of the lunar surface and paved the way for future lunar exploration. ISRO’s indigenous development of launch vehicles like the Polar Satellite Launch Vehicle (PSLV) and Geosynchronous Satellite Launch Vehicle (GSLV) has not only bolstered India’s self-reliance in space technology but also earned global acclaim for their reliability and efficiency. Beyond its technological feats, ISRO has consistently emphasized the importance of international collaboration, forging partnerships with space agencies worldwide to share expertise, conduct joint missions, and promote the peaceful use of outer space. This collaborative spirit has enabled India to contribute to global initiatives in climate monitoring, disaster management, and resource mapping while inspiring a new generation of scientists and engineers. With ambitious future projects such as the Gaganyaan human spaceflight program and exploratory missions targeting distant celestial bodies, ISRO continues to push the boundaries of what is possible, challenging conventional paradigms and setting new benchmarks in space research. The organization’s approach to mission planning—marked by rigorous scientific research, innovative engineering, and cost-effective execution—has revolutionized the way space exploration is perceived, proving that breakthrough technologies need not always come with astronomical budgets. In the process, ISRO has become a source of immense national pride and a symbol of India’s potential on the global stage, inspiring countless young minds to pursue careers in science, technology, engineering, and mathematics. Its journey, from launching small satellites into low Earth orbit to planning manned space missions, is a testament to the transformative power of vision and perseverance. The impact of ISRO’s work extends far beyond the realms of science and technology; its contributions have played a crucial role in enhancing disaster preparedness, improving agricultural practices, and even influencing policy decisions related to sustainable development. As the world grapples with challenges like climate change, resource scarcity, and rapid urbanization, ISRO’s commitment to developing innovative, sustainable solutions stands as a guiding light for nations striving for progress and resilience. Moreover, the agency’s focus on leveraging cutting-edge research to drive economic growth has not only boosted India’s technological capabilities but has also fostered a culture of self-reliance and ingenuity among its people. In every launch, every mission, and every milestone achieved, ISRO reaffirms its belief that space is a realm of infinite possibilities—one where scientific curiosity and human determination converge to create a better future. This legacy of excellence continues to inspire global partnerships and collaborative endeavors, ensuring that the pursuit of knowledge remains a shared responsibility across borders. The story of ISRO is not merely one of technical triumphs; it is a narrative of hope, resilience, and the enduring belief that even the loftiest of dreams can be realized when innovation meets determination, transforming challenges into stepping stones toward a brighter, more interconnected world. In every mission, this spirit of innovation and excellence is clearly visible, inspiring future generations to dream big and reach for the stars.", 
+       "Democracy, as a system of government, is built on the enduring principles of equal representation, freedom of expression, and accountability, and it stands as one of humanity’s greatest achievements. Its origins can be traced to the ancient Greek city-states, where citizens gathered in the agora to deliberate public affairs, laying the groundwork for the modern notion of participatory governance. Over the centuries, the concept has evolved to embrace not only the right to vote but also the protection of individual liberties, the promotion of social justice, and the establishment of institutions that ensure transparency and the rule of law. In today’s world, democracy is celebrated for its capacity to empower people from all walks of life, enabling diverse voices to influence public policy and shape the destiny of nations. Yet, the practice of democracy is not without its challenges. Modern democracies face the complex task of balancing majority rule with the protection of minority rights, while grappling with issues such as political polarization, misinformation, and the rapid pace of technological change. The digital revolution, while democratizing access to information, has also introduced new vulnerabilities, as social media platforms and online news can amplify partisan biases and spread falsehoods, thereby undermining public trust in democratic institutions. Against this backdrop, policymakers and civic leaders are working tirelessly to reform electoral processes, enhance civic education, and strengthen institutions so that they remain responsive to the needs of a rapidly changing society. The resilience of democracy lies in its capacity to evolve through self-correction and reform—a process that demands an active, informed citizenry dedicated to preserving the ideals of freedom and justice. In many parts of the world, democratic movements have sparked transformational change, inspiring oppressed communities to demand accountability and ushering in a renewed commitment to human rights and social equity. By fostering a culture of open dialogue and critical debate, democracy challenges the status quo and drives continuous improvement in governance. As nations navigate the intricacies of globalization and technological disruption, the democratic process must adapt to ensure that power remains truly in the hands of the people. Innovations such as e-governance, participatory budgeting, and deliberative forums are being explored as ways to engage citizens more directly and make government more transparent and effective. Moreover, the success of democracy depends on the strength of its civil society—a network of independent media, educational institutions, and community organizations that hold power to account and promote a vibrant public sphere. In this light, democracy is not a static ideal but a dynamic, ongoing project that requires constant nurturing, vigilance, and the willingness to embrace change. The collective efforts to enhance democratic practices are reflected in international dialogues and collaborative initiatives that seek to share best practices and address common challenges. As we witness unprecedented levels of global interconnectivity, the future of democracy will be determined by our ability to bridge divides, foster mutual understanding, and build institutions that can withstand the tests of time and technology. The journey of democracy, replete with both triumphs and setbacks, is a testament to the enduring human aspiration for freedom, dignity, and self-determination. Its continued evolution is essential for ensuring that every individual has the opportunity to contribute to the public good and that societies can flourish in an environment of justice and equality. In addition to its enduring legacy, democracy's evolution continues unabated, reflecting the relentless pursuit of justice and equality in an ever-changing global landscape. The commitment to refining democratic institutions and practices is a testament to the human spirit, inspiring continuous progress and adaptation in the face of new challenges, and ensuring that the promise of a fair and inclusive society remains alive for future generations.",
+       "Artificial intelligence (AI) has rapidly become one of the most influential and transformative fields in modern science and technology, revolutionizing industries, reshaping our daily lives, and challenging our very notions of intelligence and creativity. At its core, AI is about the development of algorithms and systems that can process vast amounts of data, recognize patterns, and make decisions with minimal human intervention. From machine learning and deep neural networks to natural language processing and computer vision, AI technologies are now at the forefront of innovations in healthcare, finance, transportation, education, and beyond. In healthcare, for example, AI is being used to diagnose diseases with unprecedented accuracy, personalize treatment plans, and even predict outbreaks by analyzing trends in patient data. In finance, sophisticated algorithms analyze market trends and consumer behavior, enabling more efficient risk management and automated trading systems that operate at speeds and levels of precision unattainable by human traders. Transportation has been revolutionized by autonomous vehicles, which leverage AI to navigate complex environments safely and efficiently, while smart cities use real-time data and predictive analytics to optimize traffic flow and reduce energy consumption. Education is also experiencing a paradigm shift, as AI-driven adaptive learning platforms customize educational content to suit individual student needs, thereby enhancing learning outcomes and democratizing access to quality education. However, the meteoric rise of AI is accompanied by significant ethical, legal, and social challenges. The opacity of many AI systems—often described as 'blackboxes' raises concerns about accountability, fairness, and transparency, particularly when these systems make decisions that affect people’s lives in areas such as criminal justice, hiring practices, and loan approvals. Moreover, as AI systems become more powerful and pervasive, issues of data privacy and security become increasingly critical, with vast amounts of personal information at risk of misuse or exploitation. There is also growing debate about the potential impact of AI on employment, as automation and intelligent systems begin to replace human workers in a range of industries, potentially exacerbating socioeconomic disparities. In response, researchers, policymakers, and ethicists are collaborating to develop frameworks and regulatory guidelines that aim to ensure AI is developed and deployed responsibly. These efforts include the promotion of explainable AI, which seeks to make the inner workings of complex algorithms more transparent, as well as initiatives to mitigate bias and protect individual privacy. International organizations are also playing a key role in fostering dialogue and cooperation among nations, recognizing that the challenges posed by AI are global in scope and require coordinated responses. As AI continues to evolve, it is not only reshaping industries and driving economic growth but also redefining what it means to be human in a digital age. The intersection of human ingenuity and machine intelligence offers immense potential for solving some of the world’s most pressing problems, from climate change and resource scarcity to disease prevention and sustainable development. Yet, this same convergence forces society to confront profound philosophical questions about the nature of consciousness, the boundaries of human creativity, and the ethical responsibilities of those who design and control these technologies. The future of AI, therefore, is as much about technological advancement as it is about the choices we make regarding its integration into our lives. With continued innovation and careful stewardship, AI holds the promise of a future where machines augment human capabilities, empower individuals, and contribute to a more equitable and sustainable global society. As we stand on the cusp of this transformative era, it is imperative that we navigate the path forward with both ambition and caution, embracing the potential of AI while rigorously addressing its ethical challenges. This delicate balance will determine whether artificial intelligence becomes a tool for unprecedented human advancement or a source of profound societal disruption, making it one of the most compelling narratives of our time.",
+       "From its humble origins as a research project known as ARPANET in the 1960s, the Internet has evolved into a global phenomenon that reshapes every aspect of modern life. In the early days, visionaries sought to connect isolated computer networks to create a resilient communication system that could withstand disruptions during emergencies. Over the following decades, the development of standardized protocols like TCP/IP allowed diverse networks to interconnect, paving the way for the World Wide Web, which emerged in the early 1990s. This revolutionary innovation transformed the Internet from a tool used primarily by scientists and academics into an accessible medium for millions around the world, igniting an explosion of creativity, commerce, and social interaction. The rapid expansion of the Internet catalyzed the rise of e-commerce, digital media, and social networks that have redefined how information is shared and consumed. Businesses, governments, and individuals alike have embraced the digital era, leveraging the Internet to streamline operations, enhance communication, and foster global connectivity. With the advent of broadband, mobile technology, and cloud computing, the Internet has become ubiquitous—empowering remote work, revolutionizing education through online learning platforms, and enabling real-time collaboration across continents. The cultural impact is profound, as digital communities form around shared interests, enabling collective action and social movements that challenge traditional power structures. At the same time, the rise of the Internet has brought about significant challenges in privacy, cybersecurity, and information integrity. As vast amounts of personal and sensitive data traverse global networks, governments and private enterprises are compelled to develop robust security measures and regulatory frameworks to protect users from emerging threats. Moreover, issues such as digital divide, misinformation, and algorithmic bias have spurred debates on how best to harness the benefits of connectivity while mitigating its risks. The evolution of the Internet has also reshaped the economic landscape by disrupting conventional business models and giving rise to entirely new industries. From online marketplaces to fintech innovations, digital transformation has redefined commerce, leading to unprecedented growth in global trade and investment. As innovation continues to accelerate, the Internet is playing a pivotal role in addressing societal challenges—driving advancements in healthcare through telemedicine and big data analytics, enhancing public services with smart city technologies, and promoting environmental sustainability via digital solutions that optimize resource management. The relentless pace of technological change ensures that the digital ecosystem is in a state of constant flux, where emerging technologies such as artificial intelligence, blockchain, and the Internet of Things are set to further revolutionize connectivity and data exchange. The impact of these innovations is already evident in the way they enhance productivity, streamline supply chains, and create more personalized user experiences. Furthermore, the democratization of information afforded by the Internet has transformed cultural and political landscapes, empowering individuals to access knowledge and participate in global conversations irrespective of geographic boundaries. This transformation has fostered a more interconnected world, where ideas and innovations cross borders with unprecedented speed, ultimately reshaping societies and driving progress. In parallel, the challenges associated with digital transformation continue to inspire collaborative efforts among researchers, policymakers, and industry leaders to develop sustainable, inclusive, and secure digital infrastructures. The journey of the Internet—from a specialized military project to an indispensable global resource—stands as a testament to human ingenuity and the transformative power of communication technology. As we look to the future, the continuous evolution of the Internet promises to unlock new opportunities, drive economic growth, and further empower individuals, while also demanding vigilant stewardship to ensure that its benefits are shared equitably and its challenges are addressed responsibly. With each new breakthrough in connectivity, the world moves closer to realizing a vision of a truly interconnected global society, where information, innovation, and collaboration pave the way for a more prosperous and inclusive future.",
+    ];
+    const randomParagraph = paragraphs[Math.floor(Math.random() * paragraphs.length)];
+    textDisplayElement.innerText = randomParagraph;
+
+    // Use the randomParagraph for reference words.
+    const referenceWords = randomParagraph.split(' ');
+
     const textInput = document.getElementById('text-input');
     const totalKeystrokesEl = document.getElementById('total-keystrokes');
     const correctKeystrokesEl = document.getElementById('correct-keystrokes');
@@ -413,16 +318,12 @@
     let extraWords = 0;
     let incorrectWords = 0;
     let timer;
-    let timeLeft = 900; // in seconds (15 minutes)
+    let timeLeft = 900; // 15 minutes in seconds
 
-    // Global variables for additional parameters.
     let startTime = 0;
     let finalCorrectWords = 0;
 
-    // Split the reference text into words.
-    const referenceWords = textDisplay.split(' ');
-
-    // Build a frequency map for reference words.
+    // Build frequency map for the reference words.
     const refFreq = {};
     referenceWords.forEach(word => {
       refFreq[word] = (refFreq[word] || 0) + 1;
@@ -448,19 +349,15 @@
       totalKeystrokes = inputText.length;
       totalKeystrokesEl.textContent = totalKeystrokes;
 
-      // Split the input into words (filtering out empty strings).
       const inputWords = inputText.trim().split(/\s+/).filter(word => word.length > 0);
 
-      // Reset counters for each update.
       correctKeystrokes = 0;
       missedWords = 0;
       extraWords = 0;
       incorrectWords = 0;
-      let correctWordsCount = 0; // local count for correctly typed words
+      let correctWordsCount = 0;
 
-      // Track how many times each input word has been processed.
       const inputWordCount = {};
-      // Track which reference word indices have been used.
       const usedIndices = new Set();
 
       inputWords.forEach((word) => {
@@ -503,6 +400,11 @@
       });
       correctKeystrokes = Math.max(0, correctKeystrokes);
 
+      // Adjust for the final word if it doesn't have a trailing space.
+      if (inputText && inputText.slice(-1) !== " ") {
+        correctKeystrokes = Math.max(0, correctKeystrokes - 1);
+      }
+
       correctKeystrokesEl.textContent = correctKeystrokes;
       missedWordsEl.textContent = missedWords;
       extraWordsEl.textContent = extraWords;
@@ -539,7 +441,6 @@
       const minutesTaken = totalTimeTakenSeconds / 60;
       const wpm = minutesTaken > 0 ? (finalCorrectWords / minutesTaken).toFixed(2) : 0;
       wpmEl.textContent = wpm;
-      // Show the stats after test submission
       document.getElementById('stats').style.display = "flex";
       alert('Test submitted! Check your stats below.');
     }
@@ -571,13 +472,8 @@
       finalCorrectWords = 0;
     }
     
-    // Navigation Toggle Script for Mobile:
-    // When the hamburger is clicked, toggle both the main-nav active class and the mobile overlay.
-    document.querySelector('.nav-toggle').addEventListener('click', function() {
-      document.querySelector('.main-nav').classList.toggle('active');
-      if (window.innerWidth <= 600) {
-        document.querySelector('.mobile-menu-overlay').classList.toggle('active');
-      }
+    document.querySelector('.navbar-toggler').addEventListener('click', function() {
+      document.querySelector('.navbar').classList.toggle('active');
     });
   </script>
 </body>
